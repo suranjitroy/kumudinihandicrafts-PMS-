@@ -181,5 +181,7 @@ Route::get('/section-list',[SectionController::class,'getSectionList'])->middlew
 Route::post('/section-by-id',[SectionController::class,'sectionById'])->middleware('auth:sanctum');
 
 
+//Section Page Frontend
 
+Route::get('/purches-requsition',[StoreRequsitionController::class,'storeRequsitionPage']);
 
