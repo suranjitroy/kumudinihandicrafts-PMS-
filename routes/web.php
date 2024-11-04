@@ -168,20 +168,20 @@ Route::get('/section-list',[SectionController::class,'getSectionList'])->middlew
 Route::post('/section-by-id',[SectionController::class,'sectionById'])->middleware('auth:sanctum');
 
 
-//Section Page Frontend
+//Store Requisition Page Frontend
 
-Route::get('/store-requsition',[StoreRequsitionController::class,'storeRequsitionPage']);
+Route::get('/store-requsition',[StoreRequsitionController::class,'storeRequsitionPage'])->name('store.requsition');
 
-//Section Backend API
+//Store Requisition Backend API
 
-Route::post('/create-section',[StoreRequsitionController::class,'sectionCreate'])->middleware('auth:sanctum');
-Route::post('/section-delete',[SectionController::class,'sectionDelete'])->middleware('auth:sanctum');
-Route::post('/section-update',[SectionController::class,'sectionUpdate'])->middleware('auth:sanctum');
-Route::get('/section-list',[SectionController::class,'getSectionList'])->middleware('auth:sanctum');
-Route::post('/section-by-id',[SectionController::class,'sectionById'])->middleware('auth:sanctum');
+Route::post('/store-req',[StoreRequsitionController::class,'storeReqCreate']);
+// Route::post('/section-delete',[SectionController::class,'sectionDelete'])->middleware('auth:sanctum');
+// Route::post('/section-update',[SectionController::class,'sectionUpdate'])->middleware('auth:sanctum');
+// Route::get('/section-list',[SectionController::class,'getSectionList'])->middleware('auth:sanctum');
+// Route::post('/section-by-id',[SectionController::class,'sectionById'])->middleware('auth:sanctum');
 
 
-//Section Page Frontend
+//Purches Requisition Page Frontend
 
-Route::get('/purches-requsition',[StoreRequsitionController::class,'storeRequsitionPage']);
+//Route::get('/purches-requsition');
 

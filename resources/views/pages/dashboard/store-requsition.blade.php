@@ -12,7 +12,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <span class=" text-dark text-bold text-xs">Request From : <span id="CName"></span> </span>
+                            <span class=" text-dark text-bold text-xs">Requsition No: 
+                                {{ $id }}  </span> <br/>
+                            <span class=" text-dark text-bold text-xs">Request From : <span id="CName"> </span> </span>
                             {{-- <p class="text-xs mx-0 my-1">Email:  <span id="CEmail"></span></p>
                             <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p> --}}
                         </div>
@@ -58,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg-4 p-2">
+            <div class="col-md-5 col-lg-5 p-2">
                 <div class="shadow-sm h-100 bg-white rounded-3 p-3">
                     <table class="table  w-100" id="productTable">
                         <thead class="w-100">
@@ -66,6 +68,7 @@
                             <td>Product</td>
                             <td>Stock</td>
                             <td>Before Date</td>
+                            <td>Before Qty</td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -76,7 +79,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg-4 p-2">
+            <div class="col-md-3 col-lg-3 p-2">
                 <div class="shadow-sm h-100 bg-white rounded-3 p-3">
                     <table class="table table-sm w-100" id="customerTable">
                         <thead class="w-100">
@@ -264,6 +267,7 @@
                         <td> ${item['product_name']}</td>
                         <td> ${item['current_stock']} ${item['unit_name']}</td>
                         <td> ${item['receive_date']}</td>
+                        <td> ${item['quantity']}</td>
                         <td><a data-name="${item['product_name']}" data-unit="${item['unit_name']}" data-id="${item['product_id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProduct btn-sm m-0">Add</a></td>
                      </tr>`
                 productList.append(row)

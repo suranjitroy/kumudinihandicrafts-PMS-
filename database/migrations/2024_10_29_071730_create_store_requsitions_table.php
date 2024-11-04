@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('store_requsitions', function (Blueprint $table) {
             $table->id();
-            $table->date('req_date');
+            $table->date('req_date')->nullable();
             $table->string('store_req_no');
             $table->unsignedBigInteger('section_id');
 
