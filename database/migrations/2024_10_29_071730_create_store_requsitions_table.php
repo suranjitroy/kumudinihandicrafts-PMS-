@@ -21,6 +21,10 @@ return new class extends Migration
             ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->integer('is_approve');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')
+            ->cascadeOnUpdate()->restrictOnDelete();
+            
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

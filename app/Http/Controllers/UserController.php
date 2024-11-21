@@ -130,7 +130,11 @@ public function userProfilePage(){
 }
 
 function UserGetProfile(Request $request){
-    return Auth::user();
+    $user =  Auth::user();
+
+    return $user;
+    //dd($user);
+
 }
 
 }

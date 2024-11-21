@@ -10,6 +10,11 @@
 
                             <div class="col-md-4 p-2">
                                 <label>First Name</label>
+                                <input id="userID" placeholder="First Name" class="form-control" type="text"/>
+                            </div>
+
+                            <div class="col-md-4 p-2">
+                                <label>First Name</label>
                                 <input id="name" placeholder="First Name" class="form-control" type="text"/>
                             </div>
 
@@ -41,9 +46,11 @@
             showLoader();
             let res=await axios.get("/user-profile",HeaderToken());
             hideLoader();
+            document.getElementById('userID').value=res.data['id'];
             document.getElementById('name').value=res.data['name'];
-            document.getElementById('email').value=res.data['email']
-            document.getElementById('password').value=res.data['password']
+            document.getElementById('email').value=res.data['email'];
+            document.getElementById('password').value=res.data['password'];
+            
 
         }catch (e) {
            unauthorized(e.response.status)

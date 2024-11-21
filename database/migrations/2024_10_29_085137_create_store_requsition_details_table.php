@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('store_requsition_details', function (Blueprint $table) {
             $table->id();
+            $table->string('store_req_no');
             $table->unsignedBigInteger('store_requsition_id');
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity');
             $table->unsignedBigInteger('unit_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->foreign('store_requsition_id')->references('id')->on('store_requsitions')
             ->cascadeOnUpdate()->restrictOnDelete();
@@ -27,6 +29,9 @@ return new class extends Migration
             $table->foreign('unit_id')->references('id')->on('units')
             ->cascadeOnUpdate()->restrictOnDelete();
 
+            
+            $table->foreign('user_id')->references('id')->on('users')
+            ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

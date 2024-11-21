@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UnitController extends Controller
 {
     public function unitPage(){
+        $user_id = Auth::id();
         return view('pages.dashboard.unit');
     }
 

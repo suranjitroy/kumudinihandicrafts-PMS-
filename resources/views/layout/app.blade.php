@@ -33,7 +33,7 @@
 </script>
 
 <script src="{{asset('js/bootstrap.bundle.js')}}"></script>
-   
+
 </script>
 </body>
 </html>

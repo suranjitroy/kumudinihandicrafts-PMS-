@@ -4,7 +4,6 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 p-2">
                 <div class="shadow-sm h-100 bg-white rounded-3 p-3">
-
                     <div class="row">
                         <div class="col-md-12">
                             <h5 class="text-bold mx-0 my-3 text-dark text-center "><u>Store Requsition</u></h5>
@@ -13,16 +12,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <span class=" text-dark text-bold text-xs">Requsition No: 
-                                <span id="STRNo">  {{ $id }} </span> </span> <br/>
-                            <span class=" text-dark text-bold text-xs">Request From : <span id="SName"> </span> <br/>
+                                <span id="STRNo">    </span> </span> <br/>
+                            <span class=" text-dark text-bold text-xs">Request From : <span id="SName"> 
+                               </span> <br/>
                             <input type="hidden" id="SId" /> 
                             {{-- <br/><span class=" text-dark text-bold text-xs"> User ID <span type="text" id="UserId"> {{ $user }}</span></span> </span> --}}
                             
                         </div>
                         
+                        
                         <div class="col-md-6">
                             <input type="text" id="STRDate" name="req_date"
-                            placeholder="Select Date" onfocus="(this.type='date')">
+                            placeholder="Select Date" onfocus="(this.type='date')" value="{{ $storeReq->req_date}}">
                         </div>
                     </div>
                     <hr class="mx-0 my-2 p-0 bg-secondary"/>
@@ -37,6 +38,11 @@
                                 </tr>
                                 </thead>
                                 <tbody  class="w-100" id="invoiceList">
+                                   <tr>
+                                    <td>a</td>
+                                    <td>b</td>
+                                    <td>c</td>
+                                   </tr>
 
                                 </tbody>
                             </table>
@@ -95,9 +101,6 @@
         </div>
     </div>
 
-
-
-
     <div class="modal animated zoomIn" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
@@ -131,11 +134,39 @@
         </div>
     </div>
 
+<script>
 
-    <script>
+async function RequsitionDetailsUpdate (id) {
+
+    document.getElementById('RID').value=id;
+
+        showLoader()
+        let res=await axios.post("/store-requsition-update-api",{id:id},HeaderToken())
+        hideLoader();
+
+//document.getElementById('Id').innerText = res.data['storeReq']['id'];
+        document.getElementById('STRDate').innerText = res.data['storeReq']['req_date'];
+        document.getElementById('STRNo').innerText = res.data['storeReq']['store_req_no'];
+        document.getElementById('SName').innerText = res.data['storeReq']['section']['name'];
+        document.getElementById('URID').innerText = res.data['storeReq']['user_id'];
+        document.getElementById('invoiceList').innerText = res.data['storeReqDetail']['product']['product_name'];
 
 
-        (async ()=>{
+        let invoiceList=$('#invoiceList');
+
+        invoiceList.empty();
+
+        res.data['storeReqDetail'].forEach(function (item,index) {
+            let row=`<tr class="text-xs">
+                        <td>${item['product']['product_name']}</td>
+                        <td>${item['quantity']} ${item['unit']['unit_name']}</td>
+                    </tr>`
+            invoiceList.append(row)
+        });
+
+}
+
+(async ()=>{
           showLoader();
           await  SectionList();
           await ProductList();
@@ -150,11 +181,11 @@
 
             let invoiceList=$('#invoiceList');
 
-            invoiceList.empty();
+           invoiceList.empty();
 
             InvoiceItemList.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
-                         <td>${item['product_name']}</td>
+                        <td>${item['product_name']}</td>
                         <td>${item['quantity']} ${item['unit_name']}</td>
                         <td><a data-index="${index}" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
                      </tr>`
@@ -162,12 +193,16 @@
             })
 
             $('.remove').on('click', async function () {
-                let index= $(this).data('   ');
+                let index= $(this).data('index');
                 removeItem(index);
             })
 
         }
+        function removeItems(index, itemId = null) {
+        // Remove the row from the UI
+        document.getElementById(`item-row-${index}`).remove();
 
+        }
 
         function removeItem(index) {
             InvoiceItemList.splice(index,1);
@@ -180,6 +215,7 @@
            let UId= document.getElementById('UId').value;
            let PUnit= document.getElementById('PUnit').value;
            let PQty= document.getElementById('PQty').value;
+          
            if(PId.length===0){
                errorToast("Product ID Required");
            }
@@ -194,7 +230,8 @@
            }
            else if(PQty.length===0){
                errorToast("Product Quantity Required");
-           } else{
+           }else {
+
                let item={
                 product_name:PName,
                 product_id:PId,
@@ -202,10 +239,24 @@
                 unit_name: PUnit,
                 quantity:PQty
             };
-               InvoiceItemList.push(item);
-               console.log(InvoiceItemList);
+
+
+            let existingItemIndex = InvoiceItemList.findIndex(i => i.product_id === PId);
+
+            if (existingItemIndex >= 0) {
+                // Update quantity if item exists
+                InvoiceItemList[existingItemIndex].quantity = 
+                parseFloat(InvoiceItemList[existingItemIndex].quantity) + parseFloat(PQty);
+            } else {
+                // Add new item if it doesn't exist in the list
+                InvoiceItemList.push(item);
+                console.log(InvoiceItemList);
                $('#create-modal').modal('hide')
                ShowInvoiceItem();
+            }
+            
+               
+               
            }
         }
 
@@ -216,7 +267,6 @@
             document.getElementById('PUnit').value=unit
             $('#create-modal').modal('show')
         }
-
 
         async function SectionList(){
             let res=await axios.get("/section-list",HeaderToken());
@@ -251,8 +301,7 @@
                 lengthChange: false
             });
         }
-
-
+        
         async function ProductList(){
             let res=await axios.get("/stock-list", HeaderToken());
             let productList=$("#productList");
@@ -289,9 +338,7 @@
             });
         }
 
-
-
-      async function createInvoice() {
+        async function createInvoice() {
             let STRDate=document.getElementById('STRDate').value;
             let STRNo=document.getElementById('STRNo').innerText;
             let SId=document.getElementById('SId').innerText;
@@ -318,7 +365,7 @@
                 let res=await axios.post("/create-store-req",Data,HeaderToken())
                 hideLoader();
                 if(res.data===1){
-                    window.location.href='/store-req-list'
+                    window.location.href='/store-requsition'
                     successToast("Requsition Created");
                 }
                 else{
@@ -327,10 +374,7 @@
             }
 
         }
-
-    </script>
-
-
+</script>
 
 
 @endsection

@@ -71,8 +71,6 @@ getList();
                     <td>${item['mobile_no']}</td>
                     <td>${item['email']} </td>
                     <td>${item['status'] == 1 ? '<span class="active">Active</span>' : '<span class="deactive">Deactive</span>' } </td>
-               
-                   
                     <td>
                         <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
                         <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
