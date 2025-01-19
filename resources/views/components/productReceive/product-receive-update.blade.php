@@ -9,6 +9,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
+                                <label class="form-label">Entry Date</label>
+                                <input type="text" id="proReceiveUpdateENTDate" class="form-control" name="entry_date"
+                            placeholder="Select Date" onfocus="(this.type='date')" >
+                            </div>
+                            <div class="col-12 p-1">
                                 <label class="form-label">Store</label>
                                 <select type="text" placeholder="Select Store" class="form-control form-select" id="proReceiveUpdateStoreID">
                                     <option value="">Select Store</option>
@@ -184,6 +189,7 @@ async function FillUpProductReceiveUpdateForm(id){
     //alert(res.data['store_id']);
 
      document.getElementById('ProRecUpdateID').value = res.data['id'];
+     document.getElementById('proReceiveUpdateENTDate').value = res.data['entry_date'];
      document.getElementById('proReceiveUpdateStoreID').value = res.data['store_id'];
      document.getElementById('proReceiveUpdateStoreCatID').value = res.data['store_category_id'];
      document.getElementById('proRecUpdateID').value = res.data['product_id'];
@@ -200,6 +206,7 @@ async function FillUpProductReceiveUpdateForm(id){
 async function Update(){
 
     let id = document.getElementById('ProRecUpdateID').value;
+    let proReceiveUpdateENTDate = document.getElementById('proReceiveUpdateENTDate').value;
     let proReceiveUpdateStoreID = document.getElementById('proReceiveUpdateStoreID').value;
     let proReceiveUpdateStoreCatID = document.getElementById('proReceiveUpdateStoreCatID').value;
     let proRecUpdateID = document.getElementById('proRecUpdateID').value;
@@ -216,6 +223,7 @@ async function Update(){
         showLoader();
         let updatePostBody = {
             id:id,
+            entry_date:proReceiveUpdateENTDate,
             store_id:proReceiveUpdateStoreID,
             store_category_id:proReceiveUpdateStoreCatID,
             product_id:proRecUpdateID,

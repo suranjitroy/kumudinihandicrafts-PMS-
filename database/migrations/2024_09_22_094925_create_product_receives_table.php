@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_receives', function (Blueprint $table) {
             $table->id();
-
+            $table->date('entry_date');
             $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('store_category_id');
             $table->unsignedBigInteger('product_id');
@@ -42,7 +42,7 @@ return new class extends Migration
             $table->foreign('unit_id')->references('id')->on('units')
             ->cascadeOnUpdate()->restrictOnDelete();
 
-            $table->float('unit_price');
+            $table->float('unit_price');     
 
             $table->float('total');
 

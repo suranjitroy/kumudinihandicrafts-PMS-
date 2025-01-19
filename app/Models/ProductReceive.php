@@ -10,6 +10,7 @@ class ProductReceive extends Model
     use HasFactory;
 
     protected $fillable = [
+        'entry_date',
         'store_id',
         'store_category_id',
         'product_id',

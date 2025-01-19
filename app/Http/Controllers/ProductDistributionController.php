@@ -16,9 +16,11 @@ class ProductDistributionController extends Controller
         try{
 
         $productReceive =  $request->validate([
+                'entry_date'        => 'required',
                 'store_id'          => 'required',
                 'store_category_id' => 'required',
                 'product_id'        => 'required',
+                'description'       => 'nullable',
                 'quantity'          => 'required',
                 'unit_id'           => 'required',
                 'unit_price'        => 'required',
@@ -61,9 +63,11 @@ class ProductDistributionController extends Controller
         try{
 
             $id                 = $request->input('id');
+            $entry_date         = $request->input('entry_date'); 
             $store_id           = $request->input('store_id'); 
             $store_category_id  = $request->input('store_category_id'); 
-            $product_id         = $request->input('product_id'); 
+            $product_id         = $request->input('product_id');
+            $description        = $request->input('description'); 
             $quantity           = $request->input('quantity');
             $unit_id            = $request->input('unit_id');
             $unit_price         = $request->input('unit_price');
@@ -71,9 +75,11 @@ class ProductDistributionController extends Controller
             $purpose            = $request->input('purpose');
     
             $supplierUpdate = ProductDistribution::where('id', $id)->update([
+                'entry_date' => $entry_date,
                 'store_id' => $store_id,
                 'store_category_id' => $store_category_id,
                 'product_id' => $product_id,
+                'description' => $description,
                 'quantity' => $quantity,
                 'unit_id' => $unit_id,
                 'unit_price' => $unit_price,

@@ -119,7 +119,7 @@ class StockController extends Controller
     public function getStock(){
 
         $stockReport = DB::table('product_receives')
-            ->select('product_receives.product_id', 'product_receives.unit_id', 'product_receives.quantity', 'stores.name', 'store_categories.category_name', 'products.product_name','units.unit_name',
+            ->select('product_receives.product_id', 'product_receives.unit_id', 'product_receives.quantity', 'product_receives.unit_price', 'stores.name', 'store_categories.category_name', 'products.product_name','units.unit_name',
                 DB::raw('DATE_FORMAT(product_receives.created_at, "%d-%m-%Y") as receive_date'),    
                 DB::raw('SUM(product_receives.quantity) as total_received'),
                 DB::raw('(SELECT COALESCE(SUM(product_distributions.quantity), 0)

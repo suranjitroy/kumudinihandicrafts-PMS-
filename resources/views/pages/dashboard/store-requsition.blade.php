@@ -22,7 +22,7 @@
                         
                         <div class="col-md-6">
                             <input type="text" id="STRDate" name="req_date"
-                            placeholder="Select Date" onfocus="(this.type='date')">
+                            placeholder="Select Date" onfocus="(this.type='date')" >
                         </div>
                     </div>
                     <hr class="mx-0 my-2 p-0 bg-secondary"/>
@@ -123,6 +123,10 @@
                         </div>
                     </form>
                 </div>
+                {{-- <div class="modal-footer">
+                    <button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                    <button onclick="add()" id="save-btn" class="btn bg-gradient-success" >Add</button>
+                </div> --}}
                 <div class="modal-footer">
                     <button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                     <button onclick="add()" id="save-btn" class="btn bg-gradient-success" >Add</button>
@@ -291,8 +295,10 @@
 
 
 
-      async function createInvoice() {
+      async function createInvoice() 
+      {
             let STRDate=document.getElementById('STRDate').value;
+            let SName=document.getElementById('SName').innerText;
             let STRNo=document.getElementById('STRNo').innerText;
             let SId=document.getElementById('SId').innerText;
            
@@ -301,13 +307,15 @@
             let Data={
                 "req_date":STRDate,
                 "store_req_no":STRNo,
-                "section_id":SId,
+                "section_id":SId,  
                 "products":InvoiceItemList
             }
 
-
             if(SName.length===0){
-                errorToast("Customer Required !")
+                errorToast("Section Required !")
+            }
+            else if(STRDate.length===0){
+                errorToast("Date Field is Required !")
             }
             else if(InvoiceItemList.length===0){
                 errorToast("Product Required !")
@@ -317,12 +325,12 @@
                 showLoader();
                 let res=await axios.post("/create-store-req",Data,HeaderToken())
                 hideLoader();
-                if(res.data===1){
-                    window.location.href='/store-req-list'
-                    successToast("Requsition Created");
+                if(res.status == 200 && res.data['status'] == "Success"){ 
+                    successToast(res.data['message']); 
+                    window.location.href='/store-requsition';
                 }
                 else{
-                    errorToast("Something Went Wrong")
+                    errorToast(res.data['message']);
                 }
             }
 

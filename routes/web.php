@@ -13,7 +13,7 @@ use App\Http\Controllers\ProductReceiveController;
 use App\Http\Controllers\StoreCategorieControllar;
 use App\Http\Controllers\StoreRequsitionController;
 use App\Http\Controllers\ProductDistributionController;
-
+use App\Http\Controllers\PurchaseRequsitionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,51 +167,101 @@ Route::get('/section-list',[SectionController::class,'getSectionList'])->middlew
 Route::post('/section-by-id',[SectionController::class,'sectionById'])->middleware('auth:sanctum');
 
 
+
+
+
+
+
+
+
+
 //Store Requisition Page Frontend
 
 Route::get('/store-requsition',[StoreRequsitionController::class,'storeRequsitionPage'])
 ->name('store.requsition');
 
-Route::get('/store-requsition-update/{id}',[StoreRequsitionController::class,'storeRequsitionPageUpdate'])
-->name('store.requsition.update');
+// Route::get('/store-requsition-update/{id}',[StoreRequsitionController::class,'storeRequsitionPageUpdate'])
+// ->name('store.requsition.update');
 
-Route::post('/store-requsition-update-api',[StoreRequsitionController::class,'storeRequsitionPageUpdateAPI'])
-->name('store.requsition.update');
+// Route::post('/store-requsition-update-api',[StoreRequsitionController::class,'storeRequsitionPageUpdateAPI'])
+// ->name('store.requsition.update');
 
-Route::get('/store-requsition-update-id/{id}',[StoreRequsitionController::class,'storeReqUpdateDetails']);
+//Route::get('/store-requsition-update-id/{id}',[StoreRequsitionController::class,'storeReqUpdateDetails']);
+
+
+
+
+
+//Store Requisition Frontend Page 
+Route::get('/store-requsition-list',[StoreRequsitionController::class,  'storeRequsitionListPage']);
 
 //Store Requisition Backend API
-
 Route::post('/create-store-req',[StoreRequsitionController::class,'storeReqCreate'])->middleware('auth:sanctum');
 Route::get('/store-req-list', [StoreRequsitionController::class,'storeReqList'])->middleware('auth:sanctum');
-
 Route::post('/store-req-details', [StoreRequsitionController::class,'storeReqDetails'])->middleware('auth:sanctum');
 Route::post('/store-req-details-up', [StoreRequsitionController::class,'storeReqDetailsUP'])->middleware('auth:sanctum');
-Route::post('/store-req-details-exist-pro', [StoreRequsitionController::class,'storeReqDetailsUP'])->middleware('auth:sanctum');
+//Route::post('/store-req-details-exist-pro', [StoreRequsitionController::class,'storeReqDetailsUP'])->middleware('auth:sanctum');
 Route::post('/store-recommended', [StoreRequsitionController::class,'storeReqRecom'])->middleware('auth:sanctum');
 Route::post('/store-not-recommended', [StoreRequsitionController::class,'storeReqNotRecom'])->middleware('auth:sanctum');
 Route::post('/update-store-req', [StoreRequsitionController::class,'storeUpdateReq'])->middleware('auth:sanctum');
 Route::post('/delete-store-req', [StoreRequsitionController::class,'storeReqDelete'])->middleware('auth:sanctum');
 
-
-// Route::post('/section-delete',[SectionController::class,'sectionDelete'])->middleware('auth:sanctum');
-// Route::post('/section-update',[SectionController::class,'sectionUpdate'])->middleware('auth:sanctum');
-// Route::get('/section-list',[SectionController::class,'getSectionList'])->middleware('auth:sanctum');
-// Route::post('/section-by-id',[SectionController::class,'sectionById'])->middleware('auth:sanctum');
-
-
-
-Route::get('/store-requsition-list',[StoreRequsitionController::class,  'storeRequsitionListPage']);
-
-// Requsition Report Page
+// Store Requsition Frontend Report Page
 Route::get('/section-wise-req-report',[StoreRequsitionController::class,'sectionWiseReqRepPage']);
 Route::get('/status-wise-req-report',[StoreRequsitionController::class,'statusWiseReqRepPage']);
 
 
 
-
-
-// Requsition Report API
+// Store Requsition Report Backend API
 Route::post('/section-wise-requsition-report',[StoreRequsitionController::class,'sectionWiseReqRep']);
 Route::post('/status-wise-requsition-report',[StoreRequsitionController::class,'statusWiseReqRep']);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Purchase Requsition Frontend Page
+Route::get('/purchase-requsition',[PurchaseRequsitionController::class,'purchaseRequsitionPage'])
+->name('purchase.requsition');
+
+Route::get('/purchase-requsition-list',[PurchaseRequsitionController::class,  'purchaseRequsitionListPage']);
+
+//Purchase Requisition Backend API
+Route::post('/create-purchase-req',[PurchaseRequsitionController::class,'purchaseReqCreate'])->middleware('auth:sanctum');
+Route::get('/purchase-req-list', [PurchaseRequsitionController::class,'purchaseReqList'])->middleware('auth:sanctum');
+Route::post('/purchase-req-details', [PurchaseRequsitionController::class,'purchaseReqDetails'])->middleware('auth:sanctum');
+Route::post('/update-purchase-req', [PurchaseRequsitionController::class,'purchaseUpdateReq'])->middleware('auth:sanctum');
+Route::post('/purchase-req-details-up', [PurchaseRequsitionController::class,'purchaseReqDetailsUP'])->middleware('auth:sanctum');
+Route::post('/delete-purchase-req', [PurchaseRequsitionController::class,'purchaseReqDelete'])->middleware('auth:sanctum');
+Route::post('/purchase-recommended', [PurchaseRequsitionController::class,'purchaseReqRecom'])->middleware('auth:sanctum');
+Route::post('/purchase-not-recommended', [PurchaseRequsitionController::class,'purchaseReqNotRecom'])->middleware('auth:sanctum');

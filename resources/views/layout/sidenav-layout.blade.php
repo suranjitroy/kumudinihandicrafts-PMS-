@@ -147,10 +147,10 @@
         <span class="side-bar-item-caption">Section</span>
     </a>
    
-    {{-- <a href="{{url("/store-requsition")}}" class="side-bar-item">
+    <a href="{{url("/store-requsition")}}" class="side-bar-item">
         <i class="bi bi-arrow-right-circle-fill"></i>
         <span class="side-bar-item-caption">Store Requsition</span>
-    </a> --}}
+    </a>
 
     <a href="{{url("/store-requsition-list")}}" class="side-bar-item">
         <i class="bi bi-arrow-right-circle-fill"></i>
@@ -165,6 +165,16 @@
     <a href="{{url("/status-wise-req-report")}}" class="side-bar-item">
         <i class="bi bi-arrow-right-circle-fill"></i>
         <span class="side-bar-item-caption">Status Wise Requsition List</span>
+    </a>
+
+    <a href="{{url("/purchase-requsition")}}" class="side-bar-item">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <span class="side-bar-item-caption">Purchase Requsition</span>
+    </a>
+
+    <a href="{{url("/purchase-requsition-list")}}" class="side-bar-item">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <span class="side-bar-item-caption">Purchase Requsition List</span>
     </a>
 
     {{-- <a href="{{url("/customerPage")}}" class="side-bar-item">

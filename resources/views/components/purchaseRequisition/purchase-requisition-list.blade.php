@@ -1,10 +1,11 @@
-<style>  
+<style>
     .active{
         color:#f5f6fa;
         background: #218c74;
         padding: 5px 8px; 
         border-radius: 5px;
-    }    
+    }
+    
     .pending{
         color:#f5f6fa; 
         background: #b71540; 
@@ -32,18 +33,18 @@
     .btn-outline-dark {
     border: 0px;
 }
-</style>
+    </style>
 <div class="container-fluid">
     <div class="row">
     <div class="col-md-12 col-sm-12 col-lg-12">
         <div class="card px-5 py-5">
             <div class="row justify-content-between ">
                 <div class="align-items-center col">
-                    <h4>Store Requisition List</h4>
+                    <h4>Purchase Requisition List</h4>
                 </div>
                 <div class="align-items-center col">
-                    {{-- <button data-bs-toggle="modal" data-bs-target="#create-modal" class=" createBtn float-end btn m-0 bg-gradient-primary">Create Requsition</button> --}}
-                    {{-- <a href=""><button data-bs-toggle="modal" data-bs-target="#create-modal" class="createBtn float-end btn m-0 bg-gradient-primary">Create Requsition</button></a> --}}
+                    {{-- <button data-bs-toggle="modal" data-bs-target="#create-modal" class=" createBtn float-end btn m-0 bg-gradient-primary">Create Requsition</button>
+                    <a href=""><button data-bs-toggle="modal" data-bs-target="#create-modal" class="createBtn float-end btn m-0 bg-gradient-primary">Create Requsition</button></a> --}}
                 </div>
             </div>
             <hr class="bg-secondary"/>
@@ -82,23 +83,26 @@
 
 <script>
 getList();
-    async function getList() {
+
+async function getList() {
 
         showLoader();
-        let res = await axios.get("/store-req-list", HeaderToken());
+        let res = await axios.get("/purchase-req-list", HeaderToken());
         hideLoader();
-        
+
        let tableData = $('#tableData');
        let tableList = $('#tableList');
 
        tableData.DataTable().destroy();
        tableList.empty();
-       
+
+
+
         res.data.forEach(function(item, index){
             let row = `<tr>
                     <td>${index+1}</td>
                     <td>${item['req_date']}</td>
-                    <td>${item['store_req_no']}</td>
+                    <td>${item['purchase_req_no']}</td>
                     <td>${item['section']['name']}</td>
                     <td>
                        ${
@@ -111,8 +115,8 @@ getList();
                         
                     </td>
                     <td>
-                        <button data-idup="${item['id']}" data-secup="${item['section_id']}" data-reqnoup="${item['store_req_no']}" data-userup="${item['user_id']}" class="btn text-sm viewBtnn " style="color"><i class="text-sm fa fa-pencil-alt"></i></button>
-                        <button data-id="${item['id']}" data-sec="${item['section_id']}" data-reqno="${item['store_req_no']}" data-user="${item['user_id']}" class="btn text-sm viewBtn" style="color"><i class="fa text-sm fa-eye"></i></button>                        
+                        <button data-idup="${item['id']}" data-secup="${item['section_id']}" data-reqnoup="${item['purchase_req_no']}" data-userup="${item['user_id']}" class="btn text-sm viewBtnn" style="color"><i class="text-sm fa fa-pencil-alt"></i></button>
+                        <button data-id="${item['id']}" data-sec="${item['section_id']}" data-reqno="${item['purchase_req_no']}" data-user="${item['user_id']}" class="btn text-sm viewBtn" style="color"><i class="fa text-sm fa-eye"></i></button>                        
                         <button data-id="${item['id']}" data-streqno="${item['store_req_no']}" class="btn text-sm deleteBtn"><i class="fa text-sm fa-trash-alt"></i></button>
                     </td>
                     </tr>`;
@@ -145,14 +149,11 @@ getList();
 
 
         // $('.editBtn').on('click', async function(){
-        //     let idUp = $(this).data('idup');
-        //     let secUp = $(this).data('secup');
-        //     let reqnoUp = $(this).data('reqnoup');
-        //     let userUp = $(this).data('userup');
-        //    window.location.href = `{{ url('store-requsition-update') }}/${idUp}`;
-        //     await RequsitionDetailsUpdate(idUp, secUp, reqnoUp, userUp);
-        //     //await StoreReqUpdateByID(id, sec, reqno);
-        //     //console.log(id);
+        //     let id = $(this).data('id');
+        //     window.location.href = `{{ url('store-requsition-update') }}/${id}`;
+        //     await RequsitionDetailsUpdate(id);
+        //     // await StoreReqUpdateByID(id, sec, reqno);
+        //     console.log(id);
             
         // });
 
@@ -182,8 +183,6 @@ getList();
             lengthMenu:[5,10,15,20,25,30],
             order:[[0, 'desc']]
         });
-
-       
         
     }
 

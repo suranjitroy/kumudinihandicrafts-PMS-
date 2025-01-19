@@ -9,6 +9,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
+                                <label class="form-label">Entry Date</label>
+                                <input type="text" id="ENTDate" class="form-control" name="entry_date"
+                            placeholder="Select Date" onfocus="(this.type='date')" >
+                            </div>
+                            <div class="col-12 p-1">
                                 <label class="form-label">Store</label>
                                 <select type="text" placeholder="Select Store" class="form-control form-select" id="storeID">
                                     <option value="">Select Store</option>
@@ -34,6 +39,12 @@
                                     <option value="">Select Product</option>
 
                                 </select>
+                            </div>
+
+                            <div class="col-12 p-1">
+                                <label class="form-label">Product Description</label>
+                                <textarea rows="3" cols="5" class="form-control" id="description">
+                                </textarea>
                             </div>
 
                             <div class="col-12 p-1">
@@ -148,10 +159,11 @@ $('.calcutate').on('input', function(){
 
    async function Save(){
         
-
+        let ENTDate         = document.getElementById('ENTDate').value;
         let storeID         = document.getElementById('storeID').value;
         let storeCategoryID = document.getElementById('storeCategoryID').value;
         let productDisID    = document.getElementById('proDisID').value;
+        let description     = document.getElementById('description').value;
         let quantity        = document.getElementById('quantity').value;
         let unitID          = document.getElementById('unitID').value;
         let unitPrice       = document.getElementById('unit_price').value;
@@ -163,9 +175,11 @@ $('.calcutate').on('input', function(){
         showLoader();
 
         let postBody = {
+            entry_date:ENTDate,
             store_id:storeID,
             store_category_id:storeCategoryID,
             product_id:productDisID,
+            description:description,
             quantity:quantity,
             unit_id:unitID,
             unit_price:unitPrice,

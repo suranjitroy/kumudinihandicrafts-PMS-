@@ -16,9 +16,11 @@
                 <thead>
                 <tr class="bg-light">
                     <th>No</th>
+                    <th>Entry Date</th>
                     <th>Store</th>
                     <th>Store Category</th>
                     <th>Product</th>
+                    <th>Product Description</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
                     <th>Total</th>
@@ -54,9 +56,11 @@ getList();
         res.data.forEach(function(item, index){
             let row = `<tr>
                     <td>${index+1}</td>
+                    <td>${item['entry_date']}</td>
                     <td>${item['store']['name']}</td>
                     <td>${item['store_category']['category_name']}</td>
                     <td>${item['product']['product_name']}</td>
+                    <td>${item['description']}</td>
                     <td>${item['quantity']} ${item['unit']['unit_name']}</td>
                     <td>${item['unit_price']}</td>
                     <td>${item['total']}</td>

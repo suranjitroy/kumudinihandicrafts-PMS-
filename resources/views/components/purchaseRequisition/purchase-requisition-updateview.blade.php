@@ -2,7 +2,7 @@
     
         <div class="modal-dialog modal-fullscreen modal-dialog-centered">
             <div class="container-fluid">
-                <div id="save-formm">
+                <form id="save-form">
                 <div class="modal-content"> 
                     <div class="modal-body p-3" style="max-height: 700px; overflow-y: auto;">
                     <div class="row">
@@ -54,7 +54,7 @@
                                 <div class="row">
                                 <div class="col-12">
                                     <p>
-                                        <button type="submit" onclick="updateInvoice()" class="btn  my-3 bg-gradient-primary w-40">Update</button>
+                                        <button onclick="updateInvoice()" class="btn  my-3 bg-gradient-primary w-40">Update</button>
                                     </p>
                                 </div>
                                     <div class="col-12 p-2">
@@ -67,11 +67,9 @@
             
                         <div class="col-md-8 col-lg-3 p-2">
                             <div class="shadow-sm h-100 bg-white rounded-3 p-3">
-                                
                                 <table class="table table-sm w-100" id="">
                                     <thead class="w-100">
-                                        <p class="text-bold">All Ready Selected Data</p>
-                                        <p>Requsition Date:  <span id="STRDateUpView"> </span></p>
+                                        <p>All Ready Selected Data <span id="STRDateUpView"> </span></p>
                                     <tr class="text-xs text-bold">
                                         <td>Name</td>
                                         <td>Qty</td>
@@ -125,7 +123,7 @@
                     </div>
                     <div class="modal-footer"></div>
                 </div>
-            </div>
+                </form>
         </div>
     </div>
 
@@ -136,7 +134,7 @@
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title" id="exampleModalLabel">Add Product</h6>
+                <h6 class="modal-title" id="exampleModalLabel">Add Produ</h6>
             </div>
             <div class="modal-body">
                 <form id="add-form">
@@ -169,30 +167,21 @@
 
 <script> 
 
-//  // Get the input field and buttons
-//         const STRDateUp = document.getElementById('STRDateUp');
-
-//         // Prevent focus event when clicking add buttons
-//         STRDateUp.addEventListener('click', (event) => {
-//                 event.preventDefault(); // Prevent default action if needed
-//                 STRDateUp.blur(); // Ensure input field loses focus
-//             });
-    
 
 
 
 async function RequsitionDetailsUp(idUp,secUp,reqnoUp,userUp) {
 
 showLoader()
-let res=await axios.post("/store-req-details-up",{section_id:secUp, store_requsition_id:idUp,store_req_no:reqnoUp},HeaderToken())
+let res=await axios.post("/purchase-req-details-up",{section_id:secUp, purchase_requsition_id:idUp,purchase_req_no:reqnoUp},HeaderToken())
 hideLoader();
 
-document.getElementById('IdUp').innerText = res.data['storeReq']['id'];
-document.getElementById('SIdUp').innerText = res.data['storeReq']['section_id'];
-document.getElementById('STRDateUpView').innerText = res.data['storeReq']['req_date'];
-//document.getElementById('STRDateUp').value = res.data['storeReq']['req_date'];
-document.getElementById('STRNoUp').innerText = res.data['storeReq']['store_req_no'];
-document.getElementById('SNameUp').innerText = res.data['storeReq']['section']['name'];
+document.getElementById('IdUp').innerText = res.data['purReq']['id'];
+document.getElementById('SIdUp').innerText = res.data['purReq']['section_id'];
+// document.getElementById('STRDateUp').value = res.data['purReq']['req_date'];
+document.getElementById('STRDateUpView').innerText = res.data['purReq']['req_date'];
+document.getElementById('STRNoUp').innerText = res.data['purReq']['purchase_req_no'];
+document.getElementById('SNameUp').innerText = res.data['purReq']['section']['name'];
 //document.getElementById('SNameUpView').innerText = res.data['storeReq']['section']['name'];
 // document.getElementById('URID').innerText = res.data['storeReq']['user_id'];
 
@@ -201,11 +190,11 @@ let invoiceListUp=$('#invoiceListUp');
 
 invoiceListUp.empty();
 
-res.data['storeReqDetail'].forEach(function (item,index) {
+res.data['purReqDetail'].forEach(function (item,index) {
     let row=`<tr class="text-xs">
                 <td>${item['product']['product_name']}</td>
                 <td>${item['quantity']} ${item['unit']['unit_name']}</td>
-                <td><a data-nameup="${item['product']['product_name']}" data-unitup="${item['unit']['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" class="btn btn-outline-secondary text-xxs px-2 py-1 addProductEdit btn-sm m-0 text-dark">Add</a></td>
+                <td><a data-nameup="${item['product']['product_name']}" data-unitup="${item['unit']['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProductEdit btn-sm m-0">Add</a></td>
                 <!--<td><a data-index="${index}" class="btn removeBtn text-xxs px-2 py-1  btn-sm m-0">Remove</a>
                 </td>-->
              </tr>`
@@ -223,6 +212,18 @@ $('.addProductEdit').on('click', async function () {
 
 $("#edit-modal").modal('show');
 
+// document.addEventListener("DOMContentLoaded", function() {
+//     // Select all remove buttons
+//     const removeButtons = document.querySelectorAll(".removeBtn");
+
+//     // Loop through each button and add a click event listener
+//     removeButtons.forEach(button => {
+//         button.addEventListener("click", function() {
+//             // Remove the parent item div when the button is clicked
+//             this.closest("tr").remove();
+//         });
+//     });
+// });
 
 document.querySelectorAll(".removeBtn").forEach(button => {
         button.addEventListener("click", function() {
@@ -264,12 +265,13 @@ document.querySelectorAll(".removeBtn").forEach(button => {
 
             $('.remove').on('click', async function () {
                 let index= $(this).data('index');
-                removeItemE(index);
+                removeItem(index);
             })
 
         }
 
-        function removeItemE(index) {
+
+        function removeItem(index) {
             InvoiceItemListEdit.splice(index,1);
             ShowInvoiceItemE()
         }
@@ -307,9 +309,27 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                console.log(InvoiceItemListEdit);
                $('#edit-modal-edit').modal('hide');
                ShowInvoiceItemE();
+
+            //     let existingItemIndex = InvoiceItemListEdit.findIndex(i => i.product_id === PIdUp);
+
+            //     if (existingItemIndex >= 0) {
+            //         // Update quantity if item exists
+            //         InvoiceItemListEdit[existingItemIndex].quantity = parseFloat(InvoiceItemListEdit[existingItemIndex].quantity) + parseFloat(PQtyUp);
+            //     } else{
+            //         InvoiceItemListEdit.push(item);
+            //    console.log(InvoiceItemListEdit);
+            //    $('#create-modal').modal('hide')
+            //   ShowInvoiceItemE();
+            //     }
+
+
+             
            }
         }
-        
+
+
+
+
         function addModalE(idUp,nameUp,unitIdUp,unitUp) {
             document.getElementById('PIdUp').value=idUp
             document.getElementById('PNameUp').value=nameUp
@@ -328,7 +348,7 @@ document.querySelectorAll(".removeBtn").forEach(button => {
             res.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
                         <td><i class="bi bi-person"></i> ${item['name']}</td>
-                        <td><a data-name="${item['name']}" data-id="${item['id']}" class="btn btn-outline-secondary addSection  text-xxs px-2 py-1  btn-sm m-0 text-dark">Add</a></td>
+                        <td><a data-name="${item['name']}" data-id="${item['id']}" class="btn btn-outline-dark addSection  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
                      </tr>`
                      SectionListEdit.append(row)
             })
@@ -352,6 +372,50 @@ document.querySelectorAll(".removeBtn").forEach(button => {
             });
         }
 
+        // async function existList(){
+        //     let res=await axios.post("/store-req-details-up",HeaderToken());
+        //     let existList=$("#existList");
+        //     let existTable=$("#existTable");
+        //     existTable.DataTable().destroy();
+        //     existList.empty();
+
+        //     res.data['storeReqDetail'].forEach(function (item,index) {
+        //     let row=`<tr class="text-xs">
+        //                 <td>${item['product']['product_name']}</td>
+        //                 <td>${item['quantity']} ${item['unit']['unit_name']}</td>
+        //                 <td><a data-index="${index}" class="btn removeBtn text-xxs px-2 py-1  btn-sm m-0">Remove</a>
+        //                 </td>
+        //             </tr>`
+        //             existList.append(row)
+        // });
+
+        //     res.data.forEach(function (item,index) {
+        //         let row=`<tr class="text-xs">
+        //                 <td><i class="bi bi-person"></i> ${item['name']}</td>
+        //                 <td><a data-name="${item['name']}" data-id="${item['id']}" class="btn btn-outline-dark addSection  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
+        //              </tr>`
+        //              existList.append(row)
+        //     })
+
+
+        //     $('.addSection').on('click', async function () {
+
+        //         let SNameUp= $(this).data('name');
+        //         let SIdUp= $(this).data('id');
+
+        //         $("#SNameUp").text(SNameUp)
+        //         $("#SIdUp").text(SIdUp)
+
+        //     })
+
+        //     new DataTable('#existTable',{
+        //         order:[[0,'desc']],
+        //         scrollCollapse: false,
+        //         info: false,
+        //         lengthChange: false
+        //     });
+        // }
+
 
         async function ProductListEdit(){
             let res=await axios.get("/stock-list", HeaderToken());
@@ -366,7 +430,7 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                         <td> ${item['current_stock']} ${item['unit_name']}</td>
                         <td> ${item['receive_date']}</td>
                         <td> ${item['quantity']} ${item['unit_name']}</td>
-                        <td><a data-nameup="${item['product_name']}" data-unitup="${item['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" class="btn btn-outline-secondary text-xxs px-2 py-1 addProductEdit btn-sm m-0 text-dark">Add</a></td>
+                        <td><a data-nameup="${item['product_name']}" data-unitup="${item['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProductEdit btn-sm m-0">Add</a></td>
                      </tr>`
                 ProductListEdit.append(row)
             })
@@ -391,7 +455,7 @@ document.querySelectorAll(".removeBtn").forEach(button => {
 
 
 
-    async function updateInvoice() {
+      async function updateInvoice() {
             let IdUp = document.getElementById('IdUp').innerText;
             let STRDateUp=document.getElementById('STRDateUp').value;
             let STRNoUp=document.getElementById('STRNoUp').innerText;
@@ -407,11 +471,9 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                 "products":InvoiceItemListEdit
             }
 
-            if(SNameUp.length===0){
+
+            if(SName.length===0){
                 errorToast("Customer Required !")
-            }
-            else if(STRDateUp.length===0){
-                errorToast("Date Field is Required !")
             }
             else if(InvoiceItemListEdit.length===0){
                 errorToast("Product Required !")
@@ -419,17 +481,11 @@ document.querySelectorAll(".removeBtn").forEach(button => {
             else{
 
                 showLoader();
-                let res=await axios.post("/update-store-req",Data,HeaderToken())
+                let res=await axios.post("/update-purchase-req",Data,HeaderToken())
                 hideLoader();
                 if(res.data===1){
-                    setTimeout(() => {
-                    successToast("Requsition Updated"); // Refresh the page
-                    }, 400);
-                setTimeout(() => {
-                    location.reload(true);
-                }, 800);
-
-                //$("#edit-modal").modal('hide'); 
+                    window.location.href='/purchase-req-list'
+                    successToast("Requsition Updated");
                 }
                 else{
                     errorToast("Something Went Wrong")
@@ -437,8 +493,6 @@ document.querySelectorAll(".removeBtn").forEach(button => {
             }
 
 }
-
-
 
 
 

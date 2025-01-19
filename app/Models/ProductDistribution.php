@@ -13,9 +13,11 @@ class ProductDistribution extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'entry_date',
         'store_id',
         'store_category_id',
         'product_id',
+        'description',
         'quantity',
         'unit_id',
         'unit_price',

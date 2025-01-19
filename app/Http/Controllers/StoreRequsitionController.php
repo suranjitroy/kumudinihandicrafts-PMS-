@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Section;
 use Illuminate\Http\Request;
-
 use App\Models\StoreRequsition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -82,13 +81,13 @@ class StoreRequsitionController extends Controller
 
            
 
-            // return redirect()->route('store.requsition')->with('store_req_no');
-            return 1;
+            //return redirect()->route('store.requsition')->with('store_req_no');
+            //return 1;
 
-            // return response()->json([
-            //     'status' => 'Insert Success',
-            //     'message' => 'Save Successfull'
-            // ]);
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Save Successfull'
+            ], 200);
 
         } catch (Exception $e) {
 
@@ -98,7 +97,8 @@ class StoreRequsitionController extends Controller
 
             return response()->json([
                 'status' => 'Insert Fail',
-                'message' => $e->getMessage()
+                //'message' => $e->getMessage()
+                'message' => 'Save Not Successfull'
             ]);
         }
 
@@ -117,11 +117,12 @@ class StoreRequsitionController extends Controller
     
             // Update the main requisition fields
             $storeRequsition->update([
-                'req_date'   => $request->input('req_date'),
-                'section_id' => $request->input('section_id'),
-                'is_approve' => $request->input('is_approve'),
-                'store_req_no' => $request->input('store_req_no'),
-                'user_id'     => $user_id,
+                
+                'req_date'      => $request->input('req_date'),
+                'section_id'    => $request->input('section_id'),
+                'is_approve'    => $request->input('is_approve'),
+                'store_req_no'  => $request->input('store_req_no'),
+                'user_id'       => $user_id,
             ]);
     
             $storeReqID = $storeRequsition->id;

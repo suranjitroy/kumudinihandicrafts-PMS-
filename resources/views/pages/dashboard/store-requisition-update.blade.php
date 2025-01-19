@@ -12,9 +12,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <span class=" text-dark text-bold text-xs">Requsition No: 
-                                <span id="STRNo">    </span> </span> <br/>
+                                <span id="STRNo"> {{ $storeReq->store_req_no}}   </span> </span> <br/>
                             <span class=" text-dark text-bold text-xs">Request From : <span id="SName"> 
-                               </span> <br/>
+                               </span>{{ $storeReq->section->name}} <br/>
                             <input type="hidden" id="SId" /> 
                             {{-- <br/><span class=" text-dark text-bold text-xs"> User ID <span type="text" id="UserId"> {{ $user }}</span></span> </span> --}}
                             
@@ -37,7 +37,7 @@
                                     <td>Remove</td>
                                 </tr>
                                 </thead>
-                                <tbody  class="w-100" id="invoiceList">
+                                <tbody  class="w-100" id="invoiceListE">
                                    <tr>
                                     <td>a</td>
                                     <td>b</td>
@@ -136,6 +136,8 @@
 
 <script>
 
+RequsitionDetailsUpdate();
+
 async function RequsitionDetailsUpdate (id) {
 
     document.getElementById('RID').value=id;
@@ -149,19 +151,19 @@ async function RequsitionDetailsUpdate (id) {
         document.getElementById('STRNo').innerText = res.data['storeReq']['store_req_no'];
         document.getElementById('SName').innerText = res.data['storeReq']['section']['name'];
         document.getElementById('URID').innerText = res.data['storeReq']['user_id'];
-        document.getElementById('invoiceList').innerText = res.data['storeReqDetail']['product']['product_name'];
+        document.getElementById('invoiceListE').innerText = res.data['storeReqDetail']['product']['product_name'];
 
 
-        let invoiceList=$('#invoiceList');
+        let invoiceListE=$('#invoiceListE');
 
-        invoiceList.empty();
+        invoiceListE.empty();
 
         res.data['storeReqDetail'].forEach(function (item,index) {
             let row=`<tr class="text-xs">
                         <td>${item['product']['product_name']}</td>
                         <td>${item['quantity']} ${item['unit']['unit_name']}</td>
                     </tr>`
-            invoiceList.append(row)
+            invoiceListE.append(row)
         });
 
 }
@@ -179,9 +181,9 @@ async function RequsitionDetailsUpdate (id) {
 
         function ShowInvoiceItem() {
 
-            let invoiceList=$('#invoiceList');
+            let invoiceListE=$('#invoiceListE');
 
-           invoiceList.empty();
+           invoiceListE.empty();
 
             InvoiceItemList.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
@@ -189,7 +191,7 @@ async function RequsitionDetailsUpdate (id) {
                         <td>${item['quantity']} ${item['unit_name']}</td>
                         <td><a data-index="${index}" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
                      </tr>`
-                invoiceList.append(row)
+                invoiceListE.append(row)
             })
 
             $('.remove').on('click', async function () {

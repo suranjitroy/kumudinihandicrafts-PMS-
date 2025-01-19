@@ -11,36 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_distributions', function (Blueprint $table) {
+        Schema::create('purchase_requsition_details', function (Blueprint $table) {
             $table->id();
-            $table->date('entry_date');
-            $table->unsignedBigInteger('store_id');
-            $table->unsignedBigInteger('store_category_id');
+            $table->string('purchase_req_no');
+            $table->unsignedBigInteger('purchase_requsition_id');
             $table->unsignedBigInteger('product_id');
+            $table->integer('quantity');
+            $table->unsignedBigInteger('unit_id');
+            $table->float('unit_price');
+            $table->float('total');
+            $table->unsignedBigInteger('user_id');
 
-            $table->foreign('store_id')->references('id')->on('stores')
+            $table->foreign('purchase_requsition_id')->references('id')->on('purchase_requsitions')
             ->cascadeOnUpdate()->restrictOnDelete();
 
-            $table->foreign('store_category_id')->references('id')->on('store_categories')
-            ->cascadeOnUpdate()->restrictOnDelete();
-            
             $table->foreign('product_id')->references('id')->on('products')
             ->cascadeOnUpdate()->restrictOnDelete();
 
-            $table->longText('description')->nullable();
-
-            $table->float('quantity');
-
-            $table->unsignedBigInteger('unit_id');
-
             $table->foreign('unit_id')->references('id')->on('units')
             ->cascadeOnUpdate()->restrictOnDelete();
-
-            $table->float('unit_price');
-
-            $table->float('total');
-
-            $table->longText('purpose')->nullable();
+        
+            $table->foreign('user_id')->references('id')->on('users')
+            ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
@@ -52,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_distributions');
+        Schema::dropIfExists('purchase_requsition_details');
     }
 };

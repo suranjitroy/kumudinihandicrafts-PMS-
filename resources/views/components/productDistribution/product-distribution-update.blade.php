@@ -9,6 +9,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
+                                <label class="form-label">Entry Date</label>
+                                <input type="text" id="proDisUpdateENTDate" class="form-control" name="entry_date"
+                            placeholder="Select Date" onfocus="(this.type='date')" >
+                            </div>
+                            <div class="col-12 p-1">
                                 <label class="form-label">Store</label>
                                 <select type="text" placeholder="Select Store" class="form-control form-select" id="proDisUpdateStoreID">
                                     <option value="">Select Store</option>
@@ -34,6 +39,12 @@
                                     <option value="">Select Product</option>
 
                                 </select>
+                            </div>
+
+                            <div class="col-12 p-1">
+                                <label class="form-label">Product Description</label>
+                                <textarea rows="3" cols="5" class="form-control" id="updateDescription">
+                                </textarea>
                             </div>
 
                             <div class="col-12 p-1">
@@ -159,9 +170,11 @@ async function FillUpProductDistributionUpdateForm(id){
     //alert(res.data['store_id']);
 
      document.getElementById('ProDisUpdateID').value = res.data['id'];
+     document.getElementById('proDisUpdateENTDate').value = res.data['entry_date'];
      document.getElementById('proDisUpdateStoreID').value = res.data['store_id'];
      document.getElementById('proDisUpdateStoreCatID').value = res.data['store_category_id'];
      document.getElementById('proDisUpdateID').value = res.data['product_id'];
+     document.getElementById('updateDescription').value = res.data['description'];
      document.getElementById('updateQuantity').value = res.data['quantity'];
      document.getElementById('unitUpdateID').value = res.data['unit_id'];
      document.getElementById('updateUnitPrice').value = res.data['unit_price'];
@@ -173,9 +186,11 @@ async function FillUpProductDistributionUpdateForm(id){
 async function Update(){
 
     let id = document.getElementById('ProDisUpdateID').value;
+    let proDisUpdateENTDate = document.getElementById('proDisUpdateENTDate').value;
     let proDisUpdateStoreID = document.getElementById('proDisUpdateStoreID').value;
     let proDisUpdateStoreCatID = document.getElementById('proDisUpdateStoreCatID').value;
     let proDisUpdateID = document.getElementById('proDisUpdateID').value;
+    let updateDescription = document.getElementById('updateDescription').value;
     let updateQuantity = document.getElementById('updateQuantity').value;
     let unitUpdateID  = document.getElementById('unitUpdateID').value;
     let updateUnitPrice = document.getElementById('updateUnitPrice').value;
@@ -187,9 +202,11 @@ async function Update(){
         showLoader();
         let updatePostBody = {
             id:id,
+            entry_date:proDisUpdateENTDate,
             store_id:proDisUpdateStoreID,
             store_category_id:proDisUpdateStoreCatID,
             product_id:proDisUpdateID,
+            description:updateDescription,
             quantity:updateQuantity,
             unit_id:unitUpdateID,
             unit_price:updateUnitPrice,

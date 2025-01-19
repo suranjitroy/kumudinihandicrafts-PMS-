@@ -16,6 +16,7 @@ class ProductReceiveController extends Controller
         try{
 
         $productReceive =  $request->validate([
+                'entry_date'        => 'required',
                 'store_id'          => 'required',
                 'store_category_id' => 'required',
                 'product_id'        => 'required',
@@ -63,6 +64,7 @@ class ProductReceiveController extends Controller
         try{
 
             $id                 = $request->input('id');
+            $entry_date         = $request->input('entry_date'); 
             $store_id           = $request->input('store_id'); 
             $store_category_id  = $request->input('store_category_id'); 
             $product_id         = $request->input('product_id'); 
@@ -75,6 +77,7 @@ class ProductReceiveController extends Controller
             $purpose            = $request->input('purpose');
     
             $supplierUpdate = ProductReceive::where('id', $id)->update([
+                'entry_date' => $entry_date,
                 'store_id' => $store_id,
                 'store_category_id' => $store_category_id,
                 'product_id' => $product_id,

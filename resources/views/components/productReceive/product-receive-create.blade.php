@@ -9,6 +9,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
+                                <label class="form-label">Entry Date</label>
+                                <input type="text" id="ENTDate" class="form-control" name="entry_date"
+                            placeholder="Select Date" onfocus="(this.type='date')" >
+                            </div>
+                            <div class="col-12 p-1">
                                 <label class="form-label">Store</label>
                                 <select type="text" placeholder="Select Store" class="form-control form-select" id="storeID">
                                     <option value="">Select Store</option>
@@ -178,6 +183,7 @@ $('.calcutate').on('input', function(){
    async function Save(){
         
 
+        let ENTDate         = document.getElementById('ENTDate').value;
         let storeID         = document.getElementById('storeID').value;
         let storeCategoryID = document.getElementById('storeCategoryID').value;
         let productRecID    = document.getElementById('proRecID').value;
@@ -194,6 +200,7 @@ $('.calcutate').on('input', function(){
         showLoader();
 
         let postBody = {
+            entry_date:ENTDate,
             store_id:storeID,
             store_category_id:storeCategoryID,
             product_id:productRecID,
