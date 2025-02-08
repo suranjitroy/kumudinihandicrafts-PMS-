@@ -20,18 +20,18 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <span class=" text-dark text-bold text-xs">Requsition No: 
+                                <span class=" text-dark text-bold text-xs">Requsition No:
                                     <span id="PURNoDe"> </span> </span> <br/>
                                 <span class=" text-dark text-bold text-xs">Request From : <span id="PURNameDe"> </span> <input type="hidden" id="PURId" /> </span>
-                                
+
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <span class=" text-dark text-bold text-xs">Date: <span id="PURDateDe"> </span></span>
                                 <span class=" d-none text-dark text-bold text-xs">user: <span id="URID"> </span></span>
                                 <span class=" d-none text-dark text-bold text-xs">id: <span id="Id"> </span></span>
                             </div>
-                            
+
                         </div>
                         <hr class="mx-0 my-2 p-0 bg-secondary"/>
                         <div class="row">
@@ -41,6 +41,8 @@
                                     <tr class="text-xs text-bold">
                                         <td>Name</td>
                                         <td>Qty</td>
+                                        <td>Unit Price</td>
+                                        <td>Total</td>
                                     </tr>
                                     </thead>
                                     <tbody  class="w-100" id="invoiceListDetails">
@@ -49,7 +51,17 @@
                                 </table>
                             </div>
                         </div>
-                        
+                        <hr class="mx-0 my-2 p-0 bg-secondary"/>
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="text-bold text-xs my-1 text-dark"> TOTAL: <span id="GTotal"></span></p>
+                            </div>
+                                <div class="col-12 p-2">
+
+                                </div>
+
+                            </div>
+
                     </div>
             </div>
             <div class="modal-footer">
@@ -57,10 +69,6 @@
                 <button onclick="PrintPage()" class="btn bg-gradient-success">Print</button>
                 <button id ="recommendedButton" onclick="recommended()" class=" btn bg-gradient-info" style="display:none">Recommended</button>
                 <button id ="notrecommendedButton" onclick="notrecommended()" class="btn bg-gradient-warning" style="display:none">Not Recommended</button>
-
-
-              
-
             </div>
         </div>
     </div>
@@ -72,13 +80,14 @@
     async function RequsitionDetails(id,sec,reqno,user) {
 
         showLoader()
-        let res=await axios.post("/purchase-req-details",{section_id:sec, purchase_requsition_id:id,purchase_req_no:reqno},HeaderToken())
+        let res=await axios.post("/purchase-req-details",{section_id:sec, purchase_requsition_id:id, purchase_req_no:reqno},HeaderToken())
         hideLoader();
 
         document.getElementById('Id').innerText = res.data['purReq']['id'];
         document.getElementById('PURDateDe').innerText = res.data['purReq']['req_date'];
         document.getElementById('PURNoDe').innerText = res.data['purReq']['purchase_req_no'];
         document.getElementById('PURNameDe').innerText = res.data['purReq']['section']['name'];
+        document.getElementById('GTotal').innerText = res.data['purReq']['grand_total'];
         document.getElementById('URID').innerText = res.data['purReq']['user_id'];
 
 
@@ -90,6 +99,8 @@
             let row=`<tr class="text-xs">
                         <td>${item['product']['product_name']}</td>
                         <td>${item['quantity']} ${item['unit']['unit_name']}</td>
+                        <td>${item['unit_price']}</td>
+                        <td>${item['total']}</td>
                      </tr>`
             invoiceListDetails.append(row)
         });

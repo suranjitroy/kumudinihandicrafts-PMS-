@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,11 @@ class PurchaseRequsition extends Model
 
     function section(){
         return $this->belongsTo(Section::class);
+    }
+
+    public function getReqDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
     }
 
 }

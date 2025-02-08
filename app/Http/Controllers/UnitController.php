@@ -39,8 +39,8 @@ class UnitController extends Controller
                 'message' => $e->getMessage()
             ]);
        }
-       
-       
+
+
     }
 
     public function getUnitList(){
@@ -48,7 +48,7 @@ class UnitController extends Controller
     }
 
     public function unitDelete(Request $request){
-        
+
         try{
 
             $id = $request->input('id');
@@ -94,10 +94,10 @@ class UnitController extends Controller
     }
 
     public function unitById(Request $request){
-        
+
         $id     = $request->input('id');
         return Unit::where('id',$id)->first();
-      
+
 
 
     }

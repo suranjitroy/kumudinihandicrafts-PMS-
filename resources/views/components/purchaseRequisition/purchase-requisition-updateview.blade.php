@@ -1,23 +1,28 @@
+<style>
+    .btn-outline-dark {
+    border: 1px solid #344767; !important
+}
+</style>
 <div class="modal animated zoomIn" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    
+
         <div class="modal-dialog modal-fullscreen modal-dialog-centered">
             <div class="container-fluid">
-                <form id="save-form">
-                <div class="modal-content"> 
+                <div id="save-formm">
+                <div class="modal-content">
                     <div class="modal-body p-3" style="max-height: 700px; overflow-y: auto;">
                     <div class="row">
                         <div class="col-md-4 col-lg-4 p-2">
                             <div class="shadow-sm h-100 bg-white rounded-3 p-3">
-            
+
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h5 class="text-bold mx-0 my-3 text-dark text-center "><u>Store Requsition</u></h5>
+                                        <h5 class="text-bold mx-0 my-3 text-dark text-center "><u>Purchase Requsition</u></h5>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <span class=" text-dark text-bold text-xs">Requsition No: 
-                                            <span id="STRNoUp">  </span> </span> <br/>
+                                        <span class=" text-dark text-bold text-xs">Requsition No:
+                                            <span id="PURNoUp">  </span> </span> <br/>
                                         <span class=" text-dark text-bold text-xs">Request From : <span id="SNameUp"> </span> <br/>
                                         {{-- <span class=" text-dark text-bold text-xs">Request From : <span id="SNameUpView"> </span> <br/> --}}
                                         {{-- <input class="text" id="SIdUp">
@@ -25,11 +30,11 @@
                                         <span type="text" id="SIdUp" class="d-none"></span>
                                         <span type="text" id="IdUp" class="d-none"></span>
                                         {{-- <br/><span class=" text-dark text-bold text-xs"> User ID <span type="text" id="UserId"> {{ $user }}</span></span> </span> --}}
-                                        
+
                                     </div>
-                                    
+
                                     <div class="col-md-6">
-                                        <input type="text" id="STRDateUp" name="req_date"
+                                        <input type="text" id="PURDateUp" name="req_date"
                                         placeholder="Select Date" onfocus="(this.type='date')">
                                     </div>
                                 </div>
@@ -41,11 +46,13 @@
                                             <tr class="text-xs">
                                                 <td>Name</td>
                                                 <td>Qty</td>
+                                                <td>Unit Price</td>
+                                                <td>Total</td>
                                                 <td>Remove</td>
                                             </tr>
                                             </thead>
                                             <tbody  class="w-100" id="invoiceListEdit">
-            
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -53,33 +60,41 @@
                                 <hr class="mx-0 my-2 p-0 bg-secondary"/>
                                 <div class="row">
                                 <div class="col-12">
+                                    <p class="text-bold text-xs my-1 text-dark"> TOTAL: <span id="GTotalUpCre"></span></p>
                                     <p>
-                                        <button onclick="updateInvoice()" class="btn  my-3 bg-gradient-primary w-40">Update</button>
+                                        <button type="submit" onclick="updateInvoicePur()" class="btn  my-3 bg-gradient-primary w-40">Update</button>
                                     </p>
                                 </div>
                                     <div class="col-12 p-2">
-            
+
                                     </div>
-            
+
                                 </div>
                             </div>
                         </div>
-            
+
                         <div class="col-md-8 col-lg-3 p-2">
                             <div class="shadow-sm h-100 bg-white rounded-3 p-3">
                                 <table class="table table-sm w-100" id="">
                                     <thead class="w-100">
-                                        <p>All Ready Selected Data <span id="STRDateUpView"> </span></p>
+                                        <p class="text-bold">All Ready Selected Data</p>
+                                        <p>Requsition Date:  <span id="STRDateUpView"> </span></p>
                                     <tr class="text-xs text-bold">
                                         <td>Name</td>
                                         <td>Qty</td>
+                                        <td>Unit Price</td>
+                                        <td>Total</td>
                                         <td>Pick</td>
                                     </tr>
                                     </thead>
                                     <tbody  class="w-100" id="invoiceListUp">
-            
+
                                     </tbody>
                                 </table>
+                                <div class="col-12">
+                                    <p class="text-bold text-xs my-1 text-dark"> TOTAL:
+                                        <span id="GTotalUp"></span></p>
+                                </div>
                             </div>
                         </div>
 
@@ -87,21 +102,22 @@
                             <div class="shadow-sm h-100 bg-white rounded-3 p-3">
                                 <table class="table  w-100" id="productTableEdit">
                                     <thead class="w-100">
-                                    <tr class="text-xs text-bold">
-                                        <td>Product</td>
-                                        <td>Stock</td>
-                                        <td>Before Date</td>
-                                        <td>Before Qty</td>
-                                        <td>Pick</td>
-                                    </tr>
+                                        <tr class="text-xs text-bold">
+                                            <td>Product</td>
+                                            <td>Stock</td>
+                                            <td>Before Date</td>
+                                            <td>Before Qty</td>
+                                            <td>Last Unit Price</td>
+                                            <td>Pick</td>
+                                        </tr>
                                     </thead>
                                     <tbody  class="w-100" id="ProductListEdit">
-            
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-lg-3 p-2">
@@ -114,7 +130,7 @@
                                     </tr>
                                     </thead>
                                     <tbody  class="w-100" id="SectionListEdit">
-            
+
                                     </tbody>
                                 </table>
                             </div>
@@ -123,7 +139,7 @@
                     </div>
                     <div class="modal-footer"></div>
                 </div>
-                </form>
+                </div>
         </div>
     </div>
 
@@ -134,20 +150,22 @@
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title" id="exampleModalLabel">Add Produ</h6>
+                <h6 class="modal-title" id="exampleModalLabel">Add Productt</h6>
             </div>
             <div class="modal-body">
                 <form id="add-form">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
-                                <label class="form-label">Product ID *</label>
+                                {{-- <label class="form-label">Product ID *</label> --}}
                                 <input type="hidden" class="form-control" id="PIdUp">
                                 <label class="form-label mt-2">Product Name *</label>
                                 <input type="text" class="form-control" id="PNameUp" readonly>
                                 <input type="hidden" class="form-control" id="UIdUp">
                                 <label class="form-label mt-2">Unit *</label>
                                 <input type="text" class="form-control" id="PUnitUp" readonly>
+                                <label class="form-label mt-2">Last Unit Price</label>
+                                <input type="text" class="form-control" id="PUnitPriceUp">
                                 <label class="form-label mt-2">Product Qty *</label>
                                 <input type="text" class="form-control" id="PQtyUp">
                             </div>
@@ -165,11 +183,7 @@
 
 
 
-<script> 
-
-
-
-
+<script>
 async function RequsitionDetailsUp(idUp,secUp,reqnoUp,userUp) {
 
 showLoader()
@@ -180,8 +194,11 @@ document.getElementById('IdUp').innerText = res.data['purReq']['id'];
 document.getElementById('SIdUp').innerText = res.data['purReq']['section_id'];
 // document.getElementById('STRDateUp').value = res.data['purReq']['req_date'];
 document.getElementById('STRDateUpView').innerText = res.data['purReq']['req_date'];
-document.getElementById('STRNoUp').innerText = res.data['purReq']['purchase_req_no'];
+document.getElementById('PURNoUp').innerText = res.data['purReq']['purchase_req_no'];
 document.getElementById('SNameUp').innerText = res.data['purReq']['section']['name'];
+document.getElementById('GTotalUp').innerText = res.data['purReq']['grand_total'];
+//document.getElementById('PUnitPriceUp').innerText = res.data['purReq']['unit_price'];
+
 //document.getElementById('SNameUpView').innerText = res.data['storeReq']['section']['name'];
 // document.getElementById('URID').innerText = res.data['storeReq']['user_id'];
 
@@ -194,19 +211,31 @@ res.data['purReqDetail'].forEach(function (item,index) {
     let row=`<tr class="text-xs">
                 <td>${item['product']['product_name']}</td>
                 <td>${item['quantity']} ${item['unit']['unit_name']}</td>
-                <td><a data-nameup="${item['product']['product_name']}" data-unitup="${item['unit']['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProductEdit btn-sm m-0">Add</a></td>
-                <!--<td><a data-index="${index}" class="btn removeBtn text-xxs px-2 py-1  btn-sm m-0">Remove</a>
-                </td>-->
+                <td>${item['unit_price']}</td>
+                <td>${item['total']}</td>
+                <td><a data-nameup="${item['product']['product_name']}" data-unitup="${item['unit']['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" data-unitpriceup="${item['unit_price']}" class="btn btn-outline-dark text-xxs px-2 py-1
+                addProductEdit btn-sm m-0">Add</a></td>
+
+                <!--<td><a data-index="${index}" class="btn removeBtn text-xxs px-2 py-1  btn-sm m-0">Remove</a>-->
+                </td>
              </tr>`
     invoiceListUp.append(row)
-});
+})
+
+        //();
+
+        $('.remove').on('click', async function () {
+            let index= $(this).data('   ');
+            removeItem(index);
+        })
 
 $('.addProductEdit').on('click', async function () {
                 let idUp= $(this).data('idup');
                 let nameUp= $(this).data('nameup');
                 let unitIdUp= $(this).data('unitidup');
                 let unitUp= $(this).data('unitup');
-                addModalE(idUp,nameUp,unitIdUp,unitUp)
+                let unitPriceUp= $(this).data('unitpriceup');
+                addModalE(idUp,nameUp,unitIdUp,unitUp,unitPriceUp)
             })
 
 
@@ -258,10 +287,14 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                 let row=`<tr class="text-xs">
                         <td>${item['product_name']}</td>
                         <td>${item['quantity']} ${item['unit_name']}</td>
+                        <td>${item['unit_price']}</td>
+                        <td>${item['total']}</td>
                         <td><a data-index="${index}" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
                      </tr>`
             invoiceListEdit.append(row)
             })
+
+            CalculateGrandTotalUp();
 
             $('.remove').on('click', async function () {
                 let index= $(this).data('index');
@@ -276,13 +309,28 @@ document.querySelectorAll(".removeBtn").forEach(button => {
             ShowInvoiceItemE()
         }
 
+        function CalculateGrandTotalUp(){
+
+        let GTotalUpCre = 0;
+
+        InvoiceItemListEdit.forEach(function (item,index) {
+            GTotalUpCre = GTotalUpCre + parseFloat(item['total']);
+
+        });
+
+        document.getElementById('GTotalUpCre').innerText=GTotalUpCre.toFixed(2);
+
+        }
+
         function addE() {
            let PIdUp= document.getElementById('PIdUp').value;
            let PNameUp= document.getElementById('PNameUp').value;
            let UIdUp= document.getElementById('UIdUp').value;
            let PUnitUp= document.getElementById('PUnitUp').value;
+           let PUnitPriceUp= document.getElementById('PUnitPriceUp').value;
            let PQtyUp= document.getElementById('PQtyUp').value;
-           if(PIdUp.length===0){
+           let PTotalUp= (parseFloat(PUnitPriceUp)*parseFloat(PQtyUp)).toFixed(2);
+        if(PIdUp.length===0){
                errorToast("Product ID Required");
            }
            else if(PNameUp.length===0){
@@ -294,47 +342,38 @@ document.querySelectorAll(".removeBtn").forEach(button => {
            else if(PUnitUp.length===0){
                errorToast("Product Price Required");
            }
+           else if(PUnitPriceUp.length===0){
+               errorToast("Product Last Price Required");
+           }
            else if(PQtyUp.length===0){
                errorToast("Product Quantity Required");
            }else{
-               let item={
-                product_name:PNameUp,
-                product_id:PIdUp,
-                unit_id:UIdUp,
-                unit_name: PUnitUp,
-                quantity:PQtyUp
-                };
+           let item={
+            product_name:PNameUp,
+            product_id:PIdUp,
+            unit_price:PUnitPriceUp,
+            unit_id:UIdUp,
+            unit_name: PUnitUp,
+            quantity:PQtyUp,
+            total:PTotalUp,
+        };
 
-                InvoiceItemListEdit.push(item);
-               console.log(InvoiceItemListEdit);
-               $('#edit-modal-edit').modal('hide');
-               ShowInvoiceItemE();
-
-            //     let existingItemIndex = InvoiceItemListEdit.findIndex(i => i.product_id === PIdUp);
-
-            //     if (existingItemIndex >= 0) {
-            //         // Update quantity if item exists
-            //         InvoiceItemListEdit[existingItemIndex].quantity = parseFloat(InvoiceItemListEdit[existingItemIndex].quantity) + parseFloat(PQtyUp);
-            //     } else{
-            //         InvoiceItemListEdit.push(item);
-            //    console.log(InvoiceItemListEdit);
-            //    $('#create-modal').modal('hide')
-            //   ShowInvoiceItemE();
-            //     }
-
-
-             
-           }
+        InvoiceItemListEdit.push(item);
+        console.log(InvoiceItemListEdit);
+        $('#edit-modal-edit').modal('hide');
+        ShowInvoiceItemE();
+        }
         }
 
 
 
 
-        function addModalE(idUp,nameUp,unitIdUp,unitUp) {
+        function addModalE(idUp,nameUp,unitIdUp,unitUp,unitPriceUp) {
             document.getElementById('PIdUp').value=idUp
             document.getElementById('PNameUp').value=nameUp
             document.getElementById('UIdUp').value=unitIdUp
             document.getElementById('PUnitUp').value=unitUp
+            document.getElementById('PUnitPriceUp').value=unitPriceUp
             $('#edit-modal-edit').modal('show')
         }
 
@@ -430,7 +469,8 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                         <td> ${item['current_stock']} ${item['unit_name']}</td>
                         <td> ${item['receive_date']}</td>
                         <td> ${item['quantity']} ${item['unit_name']}</td>
-                        <td><a data-nameup="${item['product_name']}" data-unitup="${item['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProductEdit btn-sm m-0">Add</a></td>
+                        <td> ${item['unit_price']}</td>
+                        <td><a data-nameup="${item['product_name']}" data-unitup="${item['unit_name']}" data-idup="${item['product_id']}" data-unitidup="${item['unit_id']}" data-unitpriceup="${item['unit_price']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProductEdit btn-sm m-0">Add</a></td>
                      </tr>`
                 ProductListEdit.append(row)
             })
@@ -441,9 +481,10 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                 let nameUp= $(this).data('nameup');
                 let unitIdUp= $(this).data('unitidup');
                 let unitUp= $(this).data('unitup');
-                addModalE(idUp,nameUp,unitIdUp,unitUp)
-            })
+                let unitPriceUp= $(this).data('unitpriceup');
 
+                addModalE(idUp,nameUp,unitIdUp,unitUp,unitPriceUp)
+            })
 
             new DataTable('#productTableEdit',{
                 order:[[0,'desc']],
@@ -455,24 +496,25 @@ document.querySelectorAll(".removeBtn").forEach(button => {
 
 
 
-      async function updateInvoice() {
-            let IdUp = document.getElementById('IdUp').innerText;
-            let STRDateUp=document.getElementById('STRDateUp').value;
-            let STRNoUp=document.getElementById('STRNoUp').innerText;
-            let SIdUp=document.getElementById('SIdUp').innerText;
-           
-           // console.log('today');
+      async function updateInvoicePur() {
+
+        let IdUp = document.getElementById('IdUp').innerText || null ;
+        let PURDateUp=document.getElementById('PURDateUp').value || null;
+        let PURNoUp=document.getElementById('PURNoUp').innerText || null;
+        let SIdUp=document.getElementById('SIdUp').innerText || null;
+        let GTotalUpCre=document.getElementById('GTotalUpCre').innerText || null;
 
             let Data={
                 "id":IdUp,
-                "req_date":STRDateUp,
-                "store_req_no":STRNoUp,
+                "req_date":PURDateUp,
+                "purchase_req_no":PURNoUp,
                 "section_id":SIdUp,
+                "grand_total":GTotalUpCre,
                 "products":InvoiceItemListEdit
             }
 
 
-            if(SName.length===0){
+            if(SNameUp.length===0){
                 errorToast("Customer Required !")
             }
             else if(InvoiceItemListEdit.length===0){
@@ -483,13 +525,24 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                 showLoader();
                 let res=await axios.post("/update-purchase-req",Data,HeaderToken())
                 hideLoader();
-                if(res.data===1){
-                    window.location.href='/purchase-req-list'
-                    successToast("Requsition Updated");
+                if(res.data === 1){
+                    successToast("Purchase Requisition Updated");
+                    setTimeout(() => location.reload(true), 800); // Refresh the page
+
+                // setTimeout(() => {
+                // successToast("Purchase Requsition Updated"); // Refresh the page
+                // }, 400);
+                // setTimeout(() => {
+                //     location.reload(true);
+                // }, 800);
+
+                //$("#edit-modal").modal('hide');
                 }
                 else{
                     errorToast("Something Went Wrong")
                 }
+
+
             }
 
 }

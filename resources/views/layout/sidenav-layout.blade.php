@@ -125,7 +125,7 @@
 
 
 
-    
+
 
     <a href="{{url("/stock")}}" class="side-bar-item">
         <i class="bi bi-arrow-right-circle-fill"></i>
@@ -146,7 +146,7 @@
         <i class="bi bi-arrow-right-circle-fill"></i>
         <span class="side-bar-item-caption">Section</span>
     </a>
-   
+
     <a href="{{url("/store-requsition")}}" class="side-bar-item">
         <i class="bi bi-arrow-right-circle-fill"></i>
         <span class="side-bar-item-caption">Store Requsition</span>
@@ -177,35 +177,35 @@
         <span class="side-bar-item-caption">Purchase Requsition List</span>
     </a>
 
-    {{-- <a href="{{url("/customerPage")}}" class="side-bar-item">
-        <i class="bi bi-people"></i>
-        <span class="side-bar-item-caption">Customer</span>
+    <a href="{{url("/consumption-setting-list")}}" class="side-bar-item">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <span class="side-bar-item-caption">Consumption setup</span>
     </a>
+    {{--
+        <a href="{{url("/categoryPage")}}" class="side-bar-item">
+            <i class="bi bi-list-nested"></i>
+            <span class="side-bar-item-caption">Category</span>
+        </a>
 
-    <a href="{{url("/categoryPage")}}" class="side-bar-item">
-        <i class="bi bi-list-nested"></i>
-        <span class="side-bar-item-caption">Category</span>
-    </a>
+        <a href="{{url("/productPage")}}" class="side-bar-item">
+            <i class="bi bi-bag"></i>
+            <span class="side-bar-item-caption">Product</span>
+        </a>
 
-    <a href="{{url("/productPage")}}" class="side-bar-item">
-        <i class="bi bi-bag"></i>
-        <span class="side-bar-item-caption">Product</span>
-    </a>
+        <a href="{{url('/salePage')}}" class="side-bar-item">
+            <i class="bi bi-currency-dollar"></i>
+            <span class="side-bar-item-caption">Create Sale</span>
+        </a>
 
-    <a href="{{url('/salePage')}}" class="side-bar-item">
-        <i class="bi bi-currency-dollar"></i>
-        <span class="side-bar-item-caption">Create Sale</span>
-    </a>
+        <a href="{{url('/invoicePage')}}" class="side-bar-item">
+            <i class="bi bi-receipt"></i>
+            <span class="side-bar-item-caption">Invoice</span>
+        </a>
 
-    <a href="{{url('/invoicePage')}}" class="side-bar-item">
-        <i class="bi bi-receipt"></i>
-        <span class="side-bar-item-caption">Invoice</span>
-    </a>
-
-    <a href="{{url('/reportPage')}}" class="side-bar-item">
-        <i class="bi bi-file-earmark-bar-graph"></i>
-        <span class="side-bar-item-caption">Report</span>
-    </a> --}}
+        <a href="{{url('/reportPage')}}" class="side-bar-item">
+            <i class="bi bi-file-earmark-bar-graph"></i>
+            <span class="side-bar-item-caption">Report</span>
+        </a> --}}
 
 
 </div>
@@ -218,7 +218,7 @@
 
 
 <script>
-    
+
     function MenuBarClickHandler() {
         let sideNav = document.getElementById('sideNavRef');
         let content = document.getElementById('contentRef');
@@ -247,7 +247,7 @@
     }
 
     $('.select2').select2({
-    dropdownParent: '#create-modal'  
+    dropdownParent: '#create-modal'
 });
 
 $('.select2').val('value');

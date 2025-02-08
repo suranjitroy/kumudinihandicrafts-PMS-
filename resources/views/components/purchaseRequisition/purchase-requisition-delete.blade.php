@@ -5,7 +5,7 @@
                 <h3 class=" mt-3 text-warning">Delete !</h3>
                 <p class="mb-3">Once delete, you can't get it back.</p>
                 <input class="d-none" id="deleteID"/>
-                <input class="d-none" id="storeReqNo"/>
+                <input class="d-none" id="PURreqNo"/>
             </div>
             <div class="modal-footer justify-content-end">
                 <div>
@@ -22,18 +22,17 @@
     async function itemDelete(){
 
         let id         = document.getElementById('deleteID').value;
-        let storeReqNo = document.getElementById('storeReqNo').value;
+        let PURreqNo   = document.getElementById('PURreqNo').value;
 
         $('#delete-modal-close').click();
 
         showLoader();
-        let res = await axios.post("/delete-store-req",{id:id, store_req_no:storeReqNo},HeaderToken());
+        let res = await axios.post("/delete-purchase-req",{id:id, purchase_req_no:PURreqNo},HeaderToken());
         hideLoader();
 
         if(res.status == 200 && res.data['status'] == 'Success'){
             successToast(res.data['message']);
-            document.getElementById('save-form').reset();
-            await getList();
+            setTimeout(() => location.reload(true), 800); // Refresh the page
         }else{
             errorToast(res.data['message']);
         }

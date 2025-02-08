@@ -12,14 +12,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <span class=" text-dark text-bold text-xs">Requsition No: 
+                            <span class=" text-dark text-bold text-xs">Requsition No:
                                 <span id="STRNo">  {{ $id }} </span> </span> <br/>
                             <span class=" text-dark text-bold text-xs">Request From : <span id="SName"> </span> <br/>
-                            <input type="hidden" id="SId" /> 
+                            <input type="hidden" id="SId" />
                             {{-- <br/><span class=" text-dark text-bold text-xs"> User ID <span type="text" id="UserId"> {{ $user }}</span></span> </span> --}}
-                            
+
                         </div>
-                        
+
                         <div class="col-md-6">
                             <input type="text" id="STRDate" name="req_date"
                             placeholder="Select Date" onfocus="(this.type='date')" >
@@ -160,22 +160,18 @@
                 let row=`<tr class="text-xs">
                          <td>${item['product_name']}</td>
                         <td>${item['quantity']} ${item['unit_name']}</td>
-                        <td><a data-index="${index}" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
+                        <td><a data-index="${index}" class="btn removeBtn text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
                      </tr>`
                 invoiceList.append(row)
             })
 
-            $('.remove').on('click', async function () {
-                let index= $(this).data('   ');
-                removeItem(index);
-            })
+            document.querySelectorAll(".removeBtn").forEach(button => {
+                button.addEventListener("click", function() {
+                // Remove the parent <tr> element of the clicked button
+                this.closest("tr").remove();
+                });
+            });
 
-        }
-
-
-        function removeItem(index) {
-            InvoiceItemList.splice(index,1);
-            ShowInvoiceItem()
         }
 
         function add() {
@@ -295,19 +291,19 @@
 
 
 
-      async function createInvoice() 
+      async function createInvoice()
       {
             let STRDate=document.getElementById('STRDate').value;
             let SName=document.getElementById('SName').innerText;
             let STRNo=document.getElementById('STRNo').innerText;
             let SId=document.getElementById('SId').innerText;
-           
+
            // console.log('today');
 
             let Data={
                 "req_date":STRDate,
                 "store_req_no":STRNo,
-                "section_id":SId,  
+                "section_id":SId,
                 "products":InvoiceItemList
             }
 
@@ -325,9 +321,9 @@
                 showLoader();
                 let res=await axios.post("/create-store-req",Data,HeaderToken())
                 hideLoader();
-                if(res.status == 200 && res.data['status'] == "Success"){ 
-                    successToast(res.data['message']); 
-                    window.location.href='/store-requsition';
+                if(res.status == 200 && res.data['status'] == "Success"){
+                    window.location.href='/store-requsition-list';
+                    successToast(res.data['message']);
                 }
                 else{
                     errorToast(res.data['message']);

@@ -19,54 +19,54 @@ class ProductController extends Controller
     public function productSetupCreate(Request $request){
 
         try{
- 
+
          $product = $request->validate([
              'store_id' => 'required',
              'store_category_id' => 'required',
              'product_name' => 'required'
          ]);
- 
+
          Product::create($product);
- 
+
          return response()->json([
              'status' => 'Success',
              'message' => 'Product Create Successfull !'
          ], 200);
- 
+
         }catch(Exception $e){
              return response()->json([
                  'status' => 'Failed',
                  'message' => $e->getMessage()
              ]);
         }
-        
-        
+
+
      }
- 
+
      public function getProductSetupList(){
          return Product::with('store','storeCategory')->get();
      }
- 
-     public function productSetupDelete(Request $request){     
+
+     public function productSetupDelete(Request $request){
          try{
- 
+
              $id = $request->input('id');
              Product::where('id',$id)->delete();
- 
+
              return response()->json([
                  'status' => 'Success',
                  'message' => 'Delete Successfull !'
              ],200);
- 
+
          }catch(Exception $e){
              return response()->json([
                  'status' => 'Failed',
                  'message' => 'Something went wrong'
              ]);
          }
- 
+
      }
-     
+
      public function productSetupUpdate(Request $request){
 
         try{
@@ -93,16 +93,17 @@ class ProductController extends Controller
                 'message' => 'Something went wrong '
             ]);
         }
-        
+
 
     }
 
     public function productSetupById(Request $request){
-        
+
         $id     = $request->input('id');
         return Product::where('id',$id)->first();
-      
+
 
 
     }
+
 }

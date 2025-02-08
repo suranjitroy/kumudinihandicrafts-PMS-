@@ -21,7 +21,7 @@ class PurchaseRequsitionController extends Controller
             'length' => 10,  // Use an integer instead of a string
             'prefix' => 'PUR-'
             ];
-    
+
         $id = IdGenerator::generate($config);
 
         return view('pages.dashboard.purchase-requsition', [
@@ -37,7 +37,7 @@ class PurchaseRequsitionController extends Controller
             'length' => 10,  // Use an integer instead of a string
             'prefix' => 'PUR-'
             ];
-    
+
         $id = IdGenerator::generate($config);
 
         return view('pages.dashboard.purchase-requsition-list', [
@@ -70,7 +70,7 @@ class PurchaseRequsitionController extends Controller
             $grandTotal   = $request->input('grand_total');
             $approve      = $request->input('is_approve');
             $userID       = $user_id;
-        
+
             $purchaseRequsition = PurchaseRequsition::create([
                 'req_date'         => $reqDate,
                 'purchase_req_no'  => $reqNo,
@@ -127,11 +127,11 @@ class PurchaseRequsitionController extends Controller
         $allreq = PurchaseRequsition::with('section')->get();
         return $allreq;
     }
-    public function purchaseReqDetails(Request $request){ 
+    public function purchaseReqDetails(Request $request){
         $user_id    = Auth::id();
         $sectionID  = $request->input('section_id');
-        $PurReqID = $request->input('purchase_requsition_id');
-        $PurReqNo = $request->input('purchase_req_no');
+        $PurReqID   = $request->input('purchase_requsition_id');
+        $PurReqNo   = $request->input('purchase_req_no');
 
         //$sectionDetail = Section::where('id', $sectionID)->first();
         $purReq        = PurchaseRequsition::with('section')
@@ -147,7 +147,7 @@ class PurchaseRequsitionController extends Controller
             'purReq' => $purReq,
             'purReqDetail' => $purReqDetail,
             'user_id' => $user_id,
-            
+
         );
 
         // return view('components.storeRequisition.store-requisition-details', [
@@ -175,7 +175,7 @@ class PurchaseRequsitionController extends Controller
             'purReq' => $purReq,
             'purReqDetail' => $purReqDetail,
             //'user_id' => $user_id,
-            
+
         );
 
         // return view('components.storeRequisition.store-requisition-details', [
@@ -186,55 +186,59 @@ class PurchaseRequsitionController extends Controller
 
     public function purchaseUpdateReq(Request $request){
         $user_id = Auth::id(); // Get current authenticated user ID
-    
+
         DB::beginTransaction();
-    
+
         try {
             $id = $request->input('id');
             // Find the existing store requisition by ID
-            $storeRequsition = PurchaseRequsition::findOrFail($id);
-    
+            $purchaseRequsition = PurchaseRequsition::findOrFail($id);
+
             // Update the main requisition fields
-            $storeRequsition->update([
-                
+            $purchaseRequsition->update([
                 'req_date'          => $request->input('req_date'),
-                'section_id'        => $request->input('section_id'),
-                'is_approve'        => $request->input('is_approve'),
                 'purchase_req_no'   => $request->input('purchase_req_no'),
+                'section_id'        => $request->input('section_id'),
+                'grand_total'       => $request->input('grand_total'),
+                'is_approve'        => $request->input('is_approve'),
                 'user_id'           => $user_id,
+
             ]);
-    
-            $storeReqID = $storeRequsition->id;
-            $storeReqNo = $storeRequsition->purchase_req_no;
-    
+
+            $purReqID = $purchaseRequsition->id;
+            $purReqNo = $purchaseRequsition->purchase_req_no;
+
             // Remove existing details for the requisition
-            PurchaseRequsitionDetail::where('purchase_requsition_id', $storeReqID)->delete();
-    
+            PurchaseRequsitionDetail::where('purchase_requsition_id', $purReqID)->delete();
+
             // Insert updated details
             $products = $request->input('products');
-    
+
             foreach ($products as $product) {
                 PurchaseRequsitionDetail::create([
-                    'purchase_requsition_id' => $storeReqID,
-                    'purchase_req_no'        => $storeReqNo,
+
+                    'purchase_req_no'        => $purReqNo,
+                    'purchase_requsition_id' => $purReqID,
                     'product_id'             => $product['product_id'],
                     'quantity'               => $product['quantity'],
                     'unit_id'                => $product['unit_id'],
+                    'unit_price'             => $product['unit_price'],
+                    'total'                  => $product['total'],
                     'user_id'                => $user_id,
                 ]);
             }
-    
+
             DB::commit();
 
             return 1;
-    
+
             // return response()->json([
             //     'status' => 'Update Success',
             //     'message' => 'Update successful',
             // ]);
         } catch (Exception $e) {
             DB::rollBack();
-    
+
             return response()->json([
                 'status' => 'Update Fail',
                 'message' => $e->getMessage(),
@@ -248,16 +252,16 @@ class PurchaseRequsitionController extends Controller
             DB::beginTransaction();
 
             $id         = $request->input('id');
-            $storeReqNo = $request->input('purchase_req_no');
-    
+            $purReqNo = $request->input('purchase_req_no');
+
             PurchaseRequsitionDetail::where('purchase_requsition_id', $id)
-                                  ->where('purchase_req_no', $storeReqNo)
+                                  ->where('purchase_req_no', $purReqNo)
                                   ->delete();
             PurchaseRequsition::where('id', $id)
-                                  ->where('purchase_req_no', $storeReqNo)
+                                  ->where('purchase_req_no', $purReqNo)
                                   ->delete();
             DB::commit();
-    
+
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Delete Successfull !'
@@ -270,7 +274,7 @@ class PurchaseRequsitionController extends Controller
                 'message' => $e->getMessage()
             ]);
 
-        }   
+        }
 
     }
     public function purchaseReqRecom(Request $request){
@@ -323,7 +327,9 @@ class PurchaseRequsitionController extends Controller
                 'status' => 'Failed',
                 'message' => 'Something went wrong '
             ]);
+
         }
 
     }
 }
+

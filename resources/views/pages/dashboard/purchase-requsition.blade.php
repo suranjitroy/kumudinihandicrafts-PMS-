@@ -167,7 +167,7 @@ function ShowInvoiceItemC() {
                 <td>${item['quantity']} ${item['unit_name']}</td>
                 <td>${item['unit_price']}</td>
                 <td>${item['total']}</td>
-
+ 
                 <td><a data-index="${index}" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
              </tr>`
         invoiceList.append(row)
@@ -338,11 +338,7 @@ async function createInvoice() {
    // console.log('today');
 
     let Data={
-        "req_date":PURDate,
-        "store_req_no":PURNo,
-        "section_id":SId,
-        "grand_total":GTotal,
-        "products":InvoiceItemListCre
+        
     }
 
     if(SName.length===0){
@@ -357,11 +353,11 @@ async function createInvoice() {
         hideLoader();
         if(res.data===1){
             window.location.href='/purchase-requsition-list'
-            successToast("Requsition Created");
+            successToast("Purchase Requsition Created");
         }
         else{
             errorToast("Something Went Wrong")
-        }
+        }      
     }
 
 }

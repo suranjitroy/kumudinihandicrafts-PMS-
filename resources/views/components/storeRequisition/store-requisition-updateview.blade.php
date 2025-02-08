@@ -1,14 +1,14 @@
 <div class="modal animated zoomIn" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    
+
         <div class="modal-dialog modal-fullscreen modal-dialog-centered">
             <div class="container-fluid">
                 <div id="save-formm">
-                <div class="modal-content"> 
+                <div class="modal-content">
                     <div class="modal-body p-3" style="max-height: 700px; overflow-y: auto;">
                     <div class="row">
                         <div class="col-md-4 col-lg-4 p-2">
                             <div class="shadow-sm h-100 bg-white rounded-3 p-3">
-            
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h5 class="text-bold mx-0 my-3 text-dark text-center "><u>Store Requsition</u></h5>
@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <span class=" text-dark text-bold text-xs">Requsition No: 
+                                        <span class=" text-dark text-bold text-xs">Requsition No:
                                             <span id="STRNoUp">  </span> </span> <br/>
                                         <span class=" text-dark text-bold text-xs">Request From : <span id="SNameUp"> </span> <br/>
                                         {{-- <span class=" text-dark text-bold text-xs">Request From : <span id="SNameUpView"> </span> <br/> --}}
@@ -25,9 +25,9 @@
                                         <span type="text" id="SIdUp" class="d-none"></span>
                                         <span type="text" id="IdUp" class="d-none"></span>
                                         {{-- <br/><span class=" text-dark text-bold text-xs"> User ID <span type="text" id="UserId"> {{ $user }}</span></span> </span> --}}
-                                        
+
                                     </div>
-                                    
+
                                     <div class="col-md-6">
                                         <input type="text" id="STRDateUp" name="req_date"
                                         placeholder="Select Date" onfocus="(this.type='date')">
@@ -45,7 +45,7 @@
                                             </tr>
                                             </thead>
                                             <tbody  class="w-100" id="invoiceListEdit">
-            
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -58,16 +58,16 @@
                                     </p>
                                 </div>
                                     <div class="col-12 p-2">
-            
+
                                     </div>
-            
+
                                 </div>
                             </div>
                         </div>
-            
+
                         <div class="col-md-8 col-lg-3 p-2">
                             <div class="shadow-sm h-100 bg-white rounded-3 p-3">
-                                
+
                                 <table class="table table-sm w-100" id="">
                                     <thead class="w-100">
                                         <p class="text-bold">All Ready Selected Data</p>
@@ -79,7 +79,7 @@
                                     </tr>
                                     </thead>
                                     <tbody  class="w-100" id="invoiceListUp">
-            
+
                                     </tbody>
                                 </table>
                             </div>
@@ -98,12 +98,12 @@
                                     </tr>
                                     </thead>
                                     <tbody  class="w-100" id="ProductListEdit">
-            
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-lg-3 p-2">
@@ -116,7 +116,7 @@
                                     </tr>
                                     </thead>
                                     <tbody  class="w-100" id="SectionListEdit">
-            
+
                                     </tbody>
                                 </table>
                             </div>
@@ -167,7 +167,7 @@
 
 
 
-<script> 
+<script>
 
 //  // Get the input field and buttons
 //         const STRDateUp = document.getElementById('STRDateUp');
@@ -177,7 +177,7 @@
 //                 event.preventDefault(); // Prevent default action if needed
 //                 STRDateUp.blur(); // Ensure input field loses focus
 //             });
-    
+
 
 
 
@@ -309,7 +309,7 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                ShowInvoiceItemE();
            }
         }
-        
+
         function addModalE(idUp,nameUp,unitIdUp,unitUp) {
             document.getElementById('PIdUp').value=idUp
             document.getElementById('PNameUp').value=nameUp
@@ -396,7 +396,7 @@ document.querySelectorAll(".removeBtn").forEach(button => {
             let STRDateUp=document.getElementById('STRDateUp').value;
             let STRNoUp=document.getElementById('STRNoUp').innerText;
             let SIdUp=document.getElementById('SIdUp').innerText;
-           
+
            // console.log('today');
 
             let Data={
@@ -429,7 +429,7 @@ document.querySelectorAll(".removeBtn").forEach(button => {
                     location.reload(true);
                 }, 800);
 
-                //$("#edit-modal").modal('hide'); 
+                //$("#edit-modal").modal('hide');
                 }
                 else{
                     errorToast("Something Went Wrong")
