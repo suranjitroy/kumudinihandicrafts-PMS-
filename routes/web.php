@@ -15,6 +15,8 @@ use App\Http\Controllers\StoreRequsitionController;
 use App\Http\Controllers\ProductDistributionController;
 use App\Http\Controllers\PurchaseRequsitionController;
 use \App\Http\Controllers\ConsumptionSettingController;
+use \App\Http\Controllers\SampleRequsitionController;
+use \App\Http\Controllers\MasterInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,10 +174,6 @@ Route::post('/section-by-id',[SectionController::class,'sectionById'])->middlewa
 
 
 
-
-
-
-
 //Store Requisition Page Frontend
 
 Route::get('/store-requsition',[StoreRequsitionController::class,'storeRequsitionPage'])
@@ -249,3 +247,22 @@ Route::post('/create-consumption-setting',[ConsumptionSettingController::class,'
 Route::post('/update-consumption-setting',[ConsumptionSettingController::class,'consumptionSettUpdate'])->middleware('auth:sanctum');
 Route::post('/delete-consumption-setting',[ConsumptionSettingController::class,'consumptionSettDelete'])->middleware('auth:sanctum');
 Route::post('/consumption-setting-by-id',[ConsumptionSettingController::class,'consumptionSettById'])->middleware('auth:sanctum');
+
+//Master Page Frontend
+
+Route::get('/master-info',[MasterInfoController::class,'masterPage']);
+
+//Master Backend API
+
+Route::post('/create-master',[MasterInfoController::class,'masterCreate'])->middleware('auth:sanctum');
+Route::post('/master-delete',[MasterInfoController::class,'masterDelete'])->middleware('auth:sanctum');
+Route::post('/master-update',[MasterInfoController::class,'masterUpdate'])->middleware('auth:sanctum');
+Route::get('/master-list',[MasterInfoController::class,'getMasterList'])->middleware('auth:sanctum');
+Route::post('/master-by-id',[MasterInfoController::class,'masterByID'])->middleware('auth:sanctum');
+
+// Sample Requsition Frontend Page
+Route::get('/sample-requsition',[SampleRequsitionController::class,'sampleRequsitionPage'])
+    ->name('sample.requsition');
+
+Route::get('/sample-requsition-2',[SampleRequsitionController::class,'sampleRequsitionPage2'])
+    ->name('sample.requsition');

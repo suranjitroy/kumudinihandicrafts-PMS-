@@ -21,9 +21,9 @@ class StoreRequsitionController extends Controller
             'length' => 10,  // Use an integer instead of a string
             'prefix' => 'STR-'
             ];
-    
+
         $id = IdGenerator::generate($config);
-         
+
         return view('pages.dashboard.store-requsition',[
             'id' => $id,
         ]);
@@ -50,7 +50,7 @@ class StoreRequsitionController extends Controller
             $secID   = $request->input('section_id');
             $approve = $request->input('is_approve');
             $userID  = $user_id;
-        
+
             $storeRequsition = StoreRequsition::create([
                 'req_date'      => $reqDate,
                 'store_req_no'  => $reqNo,
@@ -79,7 +79,7 @@ class StoreRequsitionController extends Controller
 
             DB::commit();
 
-           
+
 
             //return redirect()->route('store.requsition')->with('store_req_no');
             //return 1;
@@ -107,33 +107,33 @@ class StoreRequsitionController extends Controller
     public function storeUpdateReq(Request $request)
     {
         $user_id = Auth::id(); // Get current authenticated user ID
-    
+
         DB::beginTransaction();
-    
+
         try {
             $id = $request->input('id');
             // Find the existing store requisition by ID
             $storeRequsition = StoreRequsition::findOrFail($id);
-    
+
             // Update the main requisition fields
             $storeRequsition->update([
-                
+
                 'req_date'      => $request->input('req_date'),
                 'section_id'    => $request->input('section_id'),
                 'is_approve'    => $request->input('is_approve'),
                 'store_req_no'  => $request->input('store_req_no'),
                 'user_id'       => $user_id,
             ]);
-    
+
             $storeReqID = $storeRequsition->id;
             $storeReqNo = $storeRequsition->store_req_no;
-    
+
             // Remove existing details for the requisition
             StoreRequsitionDetail::where('store_requsition_id', $storeReqID)->delete();
-    
+
             // Insert updated details
             $products = $request->input('products');
-    
+
             foreach ($products as $product) {
                 StoreRequsitionDetail::create([
                     'store_requsition_id' => $storeReqID,
@@ -144,18 +144,18 @@ class StoreRequsitionController extends Controller
                     'user_id'             => $user_id,
                 ]);
             }
-    
+
             DB::commit();
 
             return 1;
-    
+
             // return response()->json([
             //     'status' => 'Update Success',
             //     'message' => 'Update successful',
             // ]);
         } catch (Exception $e) {
             DB::rollBack();
-    
+
             return response()->json([
                 'status' => 'Update Fail',
                 'message' => $e->getMessage(),
@@ -171,7 +171,7 @@ class StoreRequsitionController extends Controller
             'length' => 10,  // Use an integer instead of a string
             'prefix' => 'STR-'
             ];
-    
+
         $id = IdGenerator::generate($config);
 
         return view('pages.dashboard.store-requsition-list', [
@@ -202,7 +202,7 @@ class StoreRequsitionController extends Controller
             'storeReq' => $storeReq,
             'storeReqDetail' => $storeReqDetail,
             'user_id' => $user_id,
-            
+
         );
 
         // return view('components.storeRequisition.store-requisition-details', [
@@ -230,7 +230,7 @@ class StoreRequsitionController extends Controller
             'storeReq' => $storeReq,
             'storeReqDetail' => $storeReqDetail,
             //'user_id' => $user_id,
-            
+
         );
 
         // return view('components.storeRequisition.store-requisition-details', [
@@ -303,13 +303,13 @@ class StoreRequsitionController extends Controller
         $storeReqDetail  = StoreRequsitionDetail::with('product','unit')
                            ->where('store_requsition_id', $id)
                            ->get();
-                           
+
         return array(
             //'section' => $sectionDetail,
             'storeReq' => $storeReq,
             'storeReqDetail' => $storeReqDetail
             // 'user_id' => $user_id,
-            
+
         );
 
         // return response()->json([
@@ -324,7 +324,7 @@ class StoreRequsitionController extends Controller
 
 
 
-         
+
         // return view('pages.dashboard.store-requisition-update',[
         //     'id' => $id,
         // ]);
@@ -337,13 +337,13 @@ class StoreRequsitionController extends Controller
         $storeReqDetail  = StoreRequsitionDetail::with('product','unit')
                            ->where('store_requsition_id', $id)
                            ->get();
-                           
+
         // return array(
         //     //'section' => $sectionDetail,
         //     'storeReq' => $storeReq,
         //     // 'storeReqDetail' => $storeReqDetail,
         //     // 'user_id' => $user_id,
-            
+
         // );
 
         // return response()->json([
@@ -357,7 +357,7 @@ class StoreRequsitionController extends Controller
 
 
 
-         
+
         // return view('pages.dashboard.store-requisition-update',[
         //     'id' => $id,
         // ]);
@@ -391,7 +391,7 @@ class StoreRequsitionController extends Controller
         //                    ->where('store_requsition_id', $StoreReqID)
         //                    ->where('store_req_no', $StoreReqNo)
         //                    ->get();
-  
+
 
         // return view('pages.dashboard.store-requisition-update', [
         //     'storeReq' => $storeReq,
@@ -409,7 +409,7 @@ class StoreRequsitionController extends Controller
 
             $id         = $request->input('id');
             $storeReqNo = $request->input('store_req_no');
-    
+
             StoreRequsitionDetail::where('store_requsition_id', $id)
                                   ->where('store_req_no', $storeReqNo)
                                   ->delete();
@@ -417,7 +417,7 @@ class StoreRequsitionController extends Controller
                                   ->where('store_req_no', $storeReqNo)
                                   ->delete();
             DB::commit();
-    
+
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Delete Successfull !'
@@ -430,12 +430,12 @@ class StoreRequsitionController extends Controller
                 'message' => $e->getMessage()
             ]);
 
-        }   
+        }
 
     }
 
     public function sectionWiseReqRepPage(Request $request){
-        return view('pages.dashboard.section-wise-requsition');   
+        return view('pages.dashboard.section-wise-requsition');
     }
 
     public function sectionWiseReqRep(Request $request){
@@ -444,11 +444,11 @@ class StoreRequsitionController extends Controller
 
         $data = StoreRequsition::with('section')->where('section_id', $secID)->get();
 
-        return $data;   
+        return $data;
     }
 
     public function statusWiseReqRepPage(Request $request){
-        return view('pages.dashboard.status-wise-requsition');   
+        return view('pages.dashboard.status-wise-requsition');
     }
 
     public function statusWiseReqRep(Request $request){
@@ -457,7 +457,7 @@ class StoreRequsitionController extends Controller
 
         $data = StoreRequsition::with('section')->where('is_approve', $isApproveID)->get();
 
-        return $data;   
-    }  
-    
+        return $data;
+    }
+
 }

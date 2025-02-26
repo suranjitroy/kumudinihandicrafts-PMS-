@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('section_id');
 
             $table->foreign('section_id')->references('id')->on('sections')
-            ->cascadeOnUpdate()->restrictOnDelete();  
+            ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->float('grand_total');
 
@@ -26,10 +26,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
             ->cascadeOnUpdate()->restrictOnDelete();
-            
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
-     
+
         });
     }
 

@@ -181,6 +181,19 @@
         <i class="bi bi-arrow-right-circle-fill"></i>
         <span class="side-bar-item-caption">Consumption setup</span>
     </a>
+    <a href="{{url("/master-info")}}" class="side-bar-item">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <span class="side-bar-item-caption">Master Information Entry</span>
+    </a>
+    <a href="{{url("/sample-requsition")}}" class="side-bar-item">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <span class="side-bar-item-caption">Sample Requsition</span>
+    </a>
+
+    <a href="{{url("/sample-requsition-2")}}" class="side-bar-item">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <span class="side-bar-item-caption">Sample Requsition 2</span>
+    </a>
     {{--
         <a href="{{url("/categoryPage")}}" class="side-bar-item">
             <i class="bi bi-list-nested"></i>
