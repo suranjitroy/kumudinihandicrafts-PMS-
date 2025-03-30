@@ -217,12 +217,13 @@ Route::post('/status-wise-requsition-report',[StoreRequsitionController::class,'
 
 
 
-
 // Purchase Requsition Frontend Page
 Route::get('/purchase-requsition',[PurchaseRequsitionController::class,'purchaseRequsitionPage'])
 ->name('purchase.requsition');
-
 Route::get('/purchase-requsition-list',[PurchaseRequsitionController::class,  'purchaseRequsitionListPage']);
+
+
+
 
 //Purchase Requisition Backend API
 Route::post('/create-purchase-req',[PurchaseRequsitionController::class,'purchaseReqCreate'])->middleware('auth:sanctum');
@@ -239,7 +240,6 @@ Route::post('/purchase-not-recommended', [PurchaseRequsitionController::class,'p
 
 Route::get('/consumption-setting-list',[ConsumptionSettingController::class, 'consumptionListPage']);
 
-
 //Consumption Setting Backend API
 
 Route::get('/consumption-setting-alldata',[ConsumptionSettingController::class,'getConsumptionSettList'])->middleware('auth:sanctum');
@@ -247,6 +247,8 @@ Route::post('/create-consumption-setting',[ConsumptionSettingController::class,'
 Route::post('/update-consumption-setting',[ConsumptionSettingController::class,'consumptionSettUpdate'])->middleware('auth:sanctum');
 Route::post('/delete-consumption-setting',[ConsumptionSettingController::class,'consumptionSettDelete'])->middleware('auth:sanctum');
 Route::post('/consumption-setting-by-id',[ConsumptionSettingController::class,'consumptionSettById'])->middleware('auth:sanctum');
+
+
 
 //Master Page Frontend
 

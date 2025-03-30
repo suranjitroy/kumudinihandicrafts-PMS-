@@ -21,6 +21,7 @@
                     <th>Bahar</th>
                     <th>Yard</th>
                     <th>Inch</th>
+                    <th>Meter/Pound</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -58,6 +59,7 @@ getList();
                     <td>${item['bahar']}</td>
                     <td>${item['yard']}</td>
                     <td>${item['inch']}</td>
+                    <td>${item['meter_pound']}</td>
                     <td>
                         <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
                         <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>

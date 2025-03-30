@@ -14,7 +14,8 @@ class ConsumptionSetting extends Model
         'size',
         'bahar',
         'yard',
-        'inch'
+        'inch',
+        'meter_pound'
     ];
     protected $attributes=[
         'status' => 1

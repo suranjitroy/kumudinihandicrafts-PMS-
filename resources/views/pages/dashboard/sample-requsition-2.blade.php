@@ -2,19 +2,19 @@
 @section('content')
 <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 col-lg-4 p-2">
+            <div class="col-md-6 col-lg-10 p-2">
                 <div class="shadow-sm h-100 bg-white rounded-3 p-3">
 
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="text-bold mx-0 my-3 text-dark text-center "><u>Sample Requsition - 2</u></h5>
+                            <h5 class="text-bold mx-0 my-3 text-dark text-center "><u>Sample Requsitionn</u></h5>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <span class=" text-dark text-bold text-xs">Requsition No:
+                            <span class=" text-dark text-bold text-xs">Sample Requsition No:
                                 <span id="PURNo">  </span> </span> <br/>
-                            <span class=" text-dark text-bold text-xs">Request From : <span id="SName"> </span> <br/>
+                            <span class=" text-dark text-bold text-xs">Order To : <span id="SName"> </span> <br/>
                             {{-- <span class=" text-dark text-bold text-xs">Request From : <span id="SNameUpView"> </span> <br/> --}}
                             <input type="hidden" id="SId" />
                             {{-- <br/><span class=" text-dark text-bold text-xs"> User ID <span type="text" id="UserId"> {{ $user }}</span></span> </span> --}}
@@ -33,10 +33,16 @@
                             <table class="table w-100" id="invoiceTable">
                                 <thead class="w-100">
                                 <tr class="text-xs">
-                                    <td>Name</td>
-                                    <td>Qty</td>
-                                    <td>Unit Price</td>
-                                    <td>Total</td>
+                                    <td>Material Name</td>
+                                    <td>Size</td>
+                                    <td>Yard</td>
+                                    <td>Meter/Pound</td>
+                                    <td>Item/Pcs</td>
+                                    <td>Size Label Pcs</td>
+                                    <td>Other Pcs</td>
+                                    <td>Thread Qty</td>
+                                    <td>Total Yard</td>
+                                    <td>Total Thread</td>
                                     <td>Remove</td>
                                 </tr>
                                 </thead>
@@ -50,11 +56,25 @@
                     <div class="row">
                     <div class="col-12">
 
-                        <p class="text-bold text-xs my-1 text-dark"> TOTAL: <span id="GTotal"></span></p>
-                        <p>
-                            <button onclick="createInvoice()" class="btn  my-3 bg-gradient-primary w-40">Confirm</button>
-                        </p>
+                        <p class="text-bold text-xs my-1 text-dark"> Grand Total Yard: <span id="GTotal"></span></p>
+                        <p class="text-bold text-xs my-1 text-dark"> Total Item/Pcs: <span id="GTotal"></span></p>
+                        <p class="text-bold text-xs my-1 text-dark"> Total Size Label Pcs: <span id="GTotal"></span></p>
+                        <p class="text-bold text-xs my-1 text-dark"> Total: <span id="GTotal"></span></p>
+{{--                        <p>--}}
+{{--                            <button onclick="createInvoice()" class="btn  my-3 bg-gradient-primary w-40">Confirm</button>--}}
+{{--                        </p>--}}
                     </div>
+
+                        <div class="col-12">
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Purpose</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                                <button onclick="createInvoice()" class="btn  my-3 bg-gradient-primary w-40">Confirm</button>
+                            </p>
+                        </div>
+
                         <div class="col-12 p-2">
 
                         </div>
@@ -63,16 +83,17 @@
                 </div>
             </div>
 
-            <div class="col-md-5 col-lg-5 p-2">
+            <div class="col-md-5 col-lg-6 p-2">
                 <div class="shadow-sm h-100 bg-white rounded-3 p-3">
                     <table class="table  w-100" id="productTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
-                            <td>Product</td>
-                            <td>Stock</td>
-                            <td>Before Date</td>
-                            <td>Before Qty</td>
-                            <td>Last Unit Price</td>
+                            <td>Material Name</td>
+                            <td>Size</td>
+                            <td>Bahar</td>
+                            <td>Yard</td>
+                            <td>Inch</td>
+                            <td>Meter/Pound</td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -88,7 +109,7 @@
                     <table class="table table-sm w-100" id="sectionTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
-                            <td>Section</td>
+                            <td>Master</td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -106,28 +127,37 @@
 <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-            <h6 class="modal-title" id="exampleModalLabelC">Add Product Create</h6>
+            <h6 class="modal-title" id="exampleModalLabelC">Add Item</h6>
         </div>
         <div class="modal-body">
             <form id="add-form">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 p-1">
-                            {{-- <label class="form-label">Product ID *</label> --}}
-                            <input type="hidden" class="form-control" id="PId">
-                            <label class="form-label mt-2">Product Name *</label>
-                            <input type="text" class="form-control" id="PName" readonly>
-                            <input type="hidden" class="form-control" id="UId">
-
-                            <label class="form-label mt-2">Unit *</label>
-                            <input type="text" class="form-control" id="PUnit" readonly>
-                            <label class="form-label mt-2">Last Unit Price</label>
-                            <input type="text" class="form-control" id="PUnitPrice">
-                            <label class="form-label mt-2">Product Qty *</label>
-                            <input type="text" class="form-control" id="PQty">
+                             <label class="form-label">Material ID *</label>
+                            <input type="text" class="form-control" id="MId">
+                            <label class="form-label mt-2">Material Name</label>
+                            <input type="text" class="form-control" id="MName" readonly>
+                            <label class="form-label mt-2">Size</label>
+                            <input type="text" class="form-control" id="Size" readonly>
+                            <label class="form-label mt-2">Bahar</label>
+                            <input type="text" class="form-control" id="Bahar" readonly>
+                            <label class="form-label mt-2">Yard</label>
+                            <input type="text" class="form-control" id="Yard" readonly>
+                            <label class="form-label mt-2">Inch</label>
+                            <input type="text" class="form-control" id="Inch" readonly>
+                            <label class="form-label mt-2">Meter/Pound</label>
+                            <input type="text" class="form-control" id="MeterPound" readonly>
+                            <label class="form-label mt-2">Item / Pcs</label>
+                            <input type="text" class="form-control" id="FQty">
+                            <label class="form-label mt-2">Size Label Pcs</label>
+                            <input type="text" class="form-control" id="SQty">
+                            <label class="form-label mt-2">Other Pcs</label>
+                            <input type="text" class="form-control" id="Qty">
+                            <label class="form-label mt-2">Thread Qty</label>
+                            <input type="text" class="form-control" id="TQty">
                         </div>
                     </div>
-
                 </div>
             </form>
         </div>
@@ -154,7 +184,6 @@
 
 let InvoiceItemListCre=[];
 
-
 function ShowInvoiceItemC() {
 
     let invoiceList=$('#invoiceList');
@@ -163,10 +192,16 @@ function ShowInvoiceItemC() {
 
     InvoiceItemListCre.forEach(function (item,index) {
         let row=`<tr class="text-xs">
-                <td>${item['product_name']}</td>
-                <td>${item['quantity']} ${item['unit_name']}</td>
-                <td>${item['unit_price']}</td>
+                <td> ${item['material_name']}</td>
+                <td> ${item['size']}</td>
+                <td> ${item['yard']}</td>
+                <td> ${item['meter_pound']}</td>
+                <td> ${item['fqty']}</td>
+                <td> ${item['sqty']}</td>
+                <td>${item['qty']}</td>
+                <td>${item['tqty']}</td>
                 <td>${item['total']}</td>
+                <td>${item['total_t']}</td>
 
                 <td><a data-index="${index}" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
              </tr>`
@@ -181,9 +216,6 @@ function ShowInvoiceItemC() {
     })
 
 }
-
-
-
 
 function removeItem(index) {
     InvoiceItemListCre.splice(index,1);
@@ -204,36 +236,68 @@ function CalculateGrandTotal(){
 }
 
 function addC() {
-   let PId= document.getElementById('PId').value;
-   let PName= document.getElementById('PName').value;
-   let UId= document.getElementById('UId').value;
-   let PUnit= document.getElementById('PUnit').value;
-   let PQty= document.getElementById('PQty').value;
-   let PUnitPrice= document.getElementById('PUnitPrice').value;
-   let PTotal= (parseFloat(PUnitPrice)*parseFloat(PQty)).toFixed(2);
-   if(PId.length===0){
+
+    let MId = document.getElementById('MId').value
+    let MName = document.getElementById('MName').value
+    let Size = document.getElementById('Size').value
+    let Bahar = document.getElementById('Bahar').value
+    let Yard = document.getElementById('Yard').value
+    let Inch = document.getElementById('Inch').value
+    let MeterPound = document.getElementById('MeterPound').value
+    let FQty= document.getElementById('FQty').value;
+    let SQty= document.getElementById('SQty').value;
+    let Qty= document.getElementById('Qty').value;
+    let TQty= document.getElementById('TQty').value;
+    let Total= (parseFloat(Yard)*parseFloat(FQty)).toFixed(2);
+    let TotalThread= (parseFloat(MeterPound)*parseFloat(TQty)).toFixed(2);
+   if(MId.length===0){
        errorToast("Product ID Required");
    }
-   else if(PName.length===0){
+   else if(MName.length===0){
        errorToast("Product Name Required");
    }
-   else if(UId.length===0){
+   else if(Size.length===0){
        errorToast("Unit ID Required");
    }
-   else if(PUnit.length===0){
+   else if(Bahar.length===0){
        errorToast("Product Price Required");
    }
-   else if(PQty.length===0){
+   else if(Yard.length===0){
+       errorToast("Product Price Required");
+   }
+   else if(Yard.length===0){
+       errorToast("Product Price Required");
+   }
+   else if(Inch.length===0){
        errorToast("Product Quantity Required");
-   } else{
+   }
+   else if(FQty.length===0){
+       errorToast("Product Quantity Required");
+   }
+   else if(SQty.length===0){
+       errorToast("Product Quantity Required");
+   }
+   else if(Qty.length===0){
+       errorToast("Product Quantity Required");
+   }
+   else if(TQty.length===0){
+       errorToast("Thread Quantity Required");
+   }
+   else{
        let item={
-        product_name:PName,
-        product_id:PId,
-        unit_price:PUnitPrice,
-        unit_id:UId,
-        unit_name: PUnit,
-        quantity:PQty,
-        total:PTotal,
+        id:MId,
+        material_name:MName,
+        size:Size,
+        bahar:Bahar,
+        yard:Yard,
+        inch:Inch,
+        meter_pound:MeterPound,
+        fqty:FQty,
+        sqty:SQty,
+        qty:Qty,
+        tqty:TQty,
+        total:Total,
+        total_t:TotalThread,
     };
        InvoiceItemListCre.push(item);
        console.log(InvoiceItemListCre);
@@ -242,20 +306,19 @@ function addC() {
    }
 }
 
-
-
-function addModalC(id,name, unitId, unit, unitPrice) {
-    document.getElementById('PId').value=id
-    document.getElementById('PName').value=name
-    document.getElementById('UId').value=unitId
-    document.getElementById('PUnit').value=unit
-    document.getElementById('PUnitPrice').value=unitPrice
+function addModalC(id,mname,size,bahar,yard,inch,meterpound) {
+    document.getElementById('MId').value=id
+    document.getElementById('MName').value=mname
+    document.getElementById('Size').value=size
+    document.getElementById('Bahar').value=bahar
+    document.getElementById('Yard').value=yard
+    document.getElementById('Inch').value=inch
+    document.getElementById('MeterPound').value=meterpound
     $('#create-modal-pro').modal('show')
 }
 
-
 async function SectionList(){
-    let res=await axios.get("/section-list",HeaderToken());
+    let res=await axios.get("/master-list",HeaderToken());
     let sectionList=$("#sectionList");
     let sectionTable=$("#sectionTable");
     sectionTable.DataTable().destroy();
@@ -263,10 +326,10 @@ async function SectionList(){
 
     res.data.forEach(function (item,index) {
         let row=`<tr class="text-xs">
-                <td><i class="bi bi-person"></i> ${item['name']}</td>
-                <td><a data-name="${item['name']}" data-id="${item['id']}" class="btn btn-outline-dark addSection  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
+                <td><i class="bi bi-person"></i> ${item['master_name']}</td>
+                <td><a data-name="${item['master_name']}" data-id="${item['id']}" class="btn btn-outline-dark addSection  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
              </tr>`
-             sectionList.append(row)
+        sectionList.append(row)
     })
 
 
@@ -288,9 +351,8 @@ async function SectionList(){
     });
 }
 
-
 async function ProductList(){
-    let res=await axios.get("/stock-list", HeaderToken());
+    let res=await axios.get("/consumption-setting-alldata", HeaderToken());
     let productList=$("#productList");
     let productTable=$("#productTable");
     productTable.DataTable().destroy();
@@ -298,14 +360,15 @@ async function ProductList(){
 
     res.data.forEach(function (item,index) {
         let row=`<tr class="text-xs">
-                <td> ${item['product_name']}</td>
-                <td> ${item['current_stock']} ${item['unit_name']}</td>
-                <td> ${item['receive_date']}</td>
-                <td> ${item['quantity']} ${item['unit_name']}</td>
-                <td> ${item['unit_price']}</td>
-                <td><a data-name="${item['product_name']}" data-unit="${item['unit_name']}"
-                    data-unitprice="${item['unit_price']}" data-id="${item['product_id']}"
-                    data-unitid="${item['unit_id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProductCre btn-sm m-0">Add</a></td>
+                <td> ${item['material_name']}</td>
+                <td> ${item['size']}</td>
+                <td> ${item['bahar']}</td>
+                <td> ${item['yard']}</td>
+                <td> ${item['inch']}</td>
+                <td> ${item['meter_pound']}</td>
+                <td><a data-id="${item['id']}" data-mname="${item['material_name']}" data-size="${item['size']}"
+                    data-bahar="${item['bahar']}" data-yard="${item['yard']}"
+                    data-inch="${item['inch']}" data-meterpound="${item['meter_pound']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProductCre btn-sm m-0">Add</a></td>
              </tr>`
         productList.append(row)
     })
@@ -313,11 +376,13 @@ async function ProductList(){
 
     $('.addProductCre').on('click', async function () {
         let id= $(this).data('id');
-        let name= $(this).data('name');
-        let unitId= $(this).data('unitid');
-        let unit= $(this).data('unit');
-        let unitPrice= $(this).data('unitprice');
-        addModalC(id,name,unitId,unit,unitPrice)
+        let mname= $(this).data('mname');
+        let size= $(this).data('size');
+        let bahar= $(this).data('bahar');
+        let yard= $(this).data('yard');
+        let inch= $(this).data('inch');
+        let meterpound= $(this).data('meterpound');
+        addModalC(id,mname,size,bahar,yard,inch,meterpound)
     })
 
 
@@ -328,8 +393,6 @@ async function ProductList(){
         lengthChange: false
     });
 }
-
-
 
 async function createInvoice() {
     let PURDate=document.getElementById('PURDate').value;

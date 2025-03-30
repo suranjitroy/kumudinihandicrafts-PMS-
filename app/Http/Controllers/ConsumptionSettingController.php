@@ -17,11 +17,12 @@ class ConsumptionSettingController extends Controller
     public function consumptionSettCreate(Request $request){
         try{
             $consumptionData = $request->validate([
-                'material_name' => 'required',
-                'size'          => 'required',
-                'bahar'         => 'required',
-                'yard'          => 'required',
-                'inch'          => 'required',
+                'material_name'         => 'required',
+                'size'                  => 'required',
+                'bahar'                 => 'required',
+                'yard'                  => 'required',
+                'inch'                  => 'required',
+                'meter_pound'           => 'required',
             ]);
 
             ConsumptionSetting::create($consumptionData);
@@ -81,13 +82,15 @@ class ConsumptionSettingController extends Controller
             $bahar           = $request->input('bahar');
             $yard            = $request->input('yard');
             $inch            = $request->input('inch');
+            $meterPound      = $request->input('meter_pound');
 
             ConsumptionSetting::where('id', $id)->update([
                 'material_name' => $materialName,
                 'size'          => $size,
                 'bahar'         => $bahar,
                 'yard'          => $yard,
-                'inch'          => $inch
+                'inch'          => $inch,
+                'meter_pound'   => $meterPound
             ]);
 
             return response()->json([

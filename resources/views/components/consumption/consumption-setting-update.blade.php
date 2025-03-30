@@ -29,6 +29,10 @@
                                 <label class="form-label">Inch</label>
                                 <input type="text" class="form-control" id="inchUp">
                             </div>
+                            <div class="col-12 p-1">
+                                <label class="form-label">Meter/Pound</label>
+                                <input type="text" class="form-control" id="meterPoundUp">
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -58,26 +62,31 @@ async function FillUpUnitUpdateForm(id){
     document.getElementById('baharUp').value = res.data['bahar'];
     document.getElementById('yardUp').value = res.data['yard'];
     document.getElementById('inchUp').value = res.data['inch'];
+    document.getElementById('meterPoundUp').value = res.data['meter_pound'];
 
 }
 
 async function Update(){
 
+    let updateIDCons   = document.getElementById('updateIDCons').value;
     let materialNameUp = document.getElementById('materialNameUp').value;
     let sizeUp         = document.getElementById('sizeUp').value;
     let baharUp        = document.getElementById('baharUp').value;
     let yardUp         = document.getElementById('yardUp').value;
     let inchUp         = document.getElementById('inchUp').value;
+    let meterPoundUp   = document.getElementById('meterPoundUp').value;
 
     document.getElementById('update-modal-close').click();
 
     showLoader();
     let updatePostBody = {
+        id:updateIDCons,
         material_name:materialNameUp,
         size:sizeUp,
         bahar:baharUp,
         yard:yardUp,
-        inch:inchUp
+        inch:inchUp,
+        meter_pound:meterPoundUp
     }
     let res = await axios.post("/update-consumption-setting",updatePostBody,HeaderToken());
     hideLoader();
@@ -91,8 +100,5 @@ async function Update(){
     }
 
 }
-
-
-
 
 </script>

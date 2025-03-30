@@ -28,6 +28,10 @@
                                 <label class="form-label">Inch</label>
                                 <input type="text" class="form-control" id="inch">
                             </div>
+                            <div class="col-12 p-1">
+                                <label class="form-label">Meter/Pound</label>
+                                <input type="text" class="form-control" id="meter_pound">
+                            </div>
                         </div>
                     </div>
                     </form>
@@ -54,6 +58,7 @@
         let bahar         = document.getElementById('bahar').value;
         let yard          = document.getElementById('yard').value;
         let inch          = document.getElementById('inch').value;
+        let meter_pound   = document.getElementById('meter_pound').value;
 
 
         $('#modal-close').click();
@@ -66,7 +71,8 @@
            size:size,
            bahar:bahar,
            yard:yard,
-           inch:inch
+           inch:inch,
+           meter_pound:meter_pound,
        }
 
         let res = await axios.post('/create-consumption-setting',postBody,HeaderToken());
